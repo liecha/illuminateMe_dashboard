@@ -68,8 +68,8 @@ st.markdown("""
 #######################
 # Load data
 df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
-#df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv')
-df_results = pd.read_csv('data/results_20241021_win_batch_1140_training_240min.csv')
+df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv')
+#df_results = pd.read_csv('data/results_20241021_win_batch_1140_training_240min.csv')
 
 
 #######################
@@ -196,7 +196,7 @@ def calculate_population_difference(input_df, input_year):
 
 #######################
 # Dashboard Main Panel
-col = st.columns((2.6, 6.5), gap='medium')
+col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:
     st.markdown('#### Stress peaks')

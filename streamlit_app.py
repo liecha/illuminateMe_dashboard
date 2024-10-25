@@ -77,6 +77,7 @@ with st.sidebar:
     st.title('🏂 US Population Dashboard')
     
     df_stress_peaks = df_results[df_results['score'] >= 10]
+    #df_stress_peaks = df_stress_peaks[["date", "time", "weekday"]].reset_index(drop=True, inplace=True)
     date_list_score = df_stress_peaks.groupby(['date']).count()
     date_list = date_list_score.index
     
@@ -199,8 +200,9 @@ col = st.columns((4.5, 4.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     
-    df_stress_peaks = df_selected_date[["date", "time", "weekday"]].reset_index(drop=True, inplace=True)
+    df_selected_date.reset_index(drop=True, inplace=True)
     
+    '''
     st.dataframe(df_stress_peaks,
                  column_order=("date", "time", "weekday"),
                  hide_index=True,
@@ -222,7 +224,7 @@ with col[0]:
                         max_value=max(df_stress_peaks.weekday),
                      )}
                  )
-
+'''
 
     st.dataframe(df_selected_year_sorted,
                  column_order=("states", "population"),

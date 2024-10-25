@@ -68,7 +68,8 @@ st.markdown("""
 #######################
 # Load data
 df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
-df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv')
+#df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv')
+df_results = pd.read_csv('data/results_20241024_all_points_training_240min.csv')
 
 
 #######################

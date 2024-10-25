@@ -161,11 +161,15 @@ with st.sidebar:
 # Plots
 
 # Barplot
-def make_barplot(input_df, input_y, input_x):
+def make_barplot():
+    source = pd.DataFrame({
+        'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+        'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
+    })
     
-    barplot = alt.Chart(input_df).mark_bar().encode(
-            x=input_x,
-            y=input_y
+    barplot = alt.Chart(source).mark_bar().encode(
+            x='a',
+            y='b'
         ) 
     return barplot
 

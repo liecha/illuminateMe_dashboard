@@ -196,9 +196,7 @@ col = st.columns((4.5, 4.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     
-    df_stress_peaks
-    
-    st.dataframe(df_stress_peaks,
+    st.dataframe(df_stress_peaks["date", "time", "weekday"],
                  column_order=("date", "time", "weekday"),
                  hide_index=True,
                  width=None,

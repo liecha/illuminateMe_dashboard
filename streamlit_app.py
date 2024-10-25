@@ -99,18 +99,27 @@ with st.sidebar:
 #######################
 # Plots
 
-# Heatmap
+source = pd.DataFrame({
+    'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
+})
+
+# Barplot
 def make_barplot():
     source = pd.DataFrame({
         'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
         'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
     })
     
-    test = alt.Chart(source).mark_bar().encode(
-        x='a',
-        y='b'
-    )
-    return test
+    barplot = alt.Chart(source).mark_bar().encode(
+            x='a',
+            y='b'
+        ).properties(width=900
+        ).configure_axis(
+        labelFontSize=12,
+        titleFontSize=12
+        ) 
+    return barplot
 
 # Heatmap
 def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
@@ -258,7 +267,8 @@ with col[0]:
 with col[1]:
     st.markdown('#### Total Population')
     
-    barplot = make_barplot()
+    barp = make_barplot()
+    st.plotly_chart(barp, use_container_width=True)
     
     choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)
     st.plotly_chart(choropleth, use_container_width=True)

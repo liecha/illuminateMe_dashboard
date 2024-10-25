@@ -200,10 +200,9 @@ col = st.columns((4.5, 4.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     
-    df_selected_date.reset_index(drop=True, inplace=True)
-    
-    '''
-    st.dataframe(df_stress_peaks,
+    #df_selected_date.reset_index(drop=True, inplace=True)  
+
+    st.dataframe(df_selected_date,
                  column_order=("date", "time", "weekday"),
                  hide_index=True,
                  width=None,
@@ -224,7 +223,7 @@ with col[0]:
                         max_value=max(df_stress_peaks.weekday),
                      )}
                  )
-'''
+
 
     st.dataframe(df_selected_year_sorted,
                  column_order=("states", "population"),

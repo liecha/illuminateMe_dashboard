@@ -78,7 +78,6 @@ with st.sidebar:
     st.title('🏂 US Population Dashboard')
     
     df_stress_peaks = df_results[df_results['score'] >= 8]
-    #df_stress_peaks = df_stress_peaks[["date", "time", "weekday"]].reset_index(drop=True, inplace=True)
     date_list_score = df_stress_peaks.groupby(['date']).count()
     date_list = date_list_score.index
     
@@ -257,10 +256,7 @@ with col[0]:
 
 with col[1]:
     st.markdown('#### Total Population')
-    
-    barp = make_barplot()
-    st.plotly_chart(barp, use_container_width=True)
-    
+        
     choropleth1 = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)
     st.plotly_chart(choropleth1, use_container_width=True)
     

@@ -136,9 +136,9 @@ with st.sidebar:
     # 6: diff == 20-30
     # 8: diff == 30-40
     # 10: diff == 40-   
-    stress_scores = [1, 2, 4, 6, 8, 10]
+    stress_scores = [10, 8, 6, 4, 2, 1]
     selected_score = st.selectbox('Select score', stress_scores)
-    df_score = df_results[df_results.date == selected_score]
+    df_score = df_results[df_results.score == selected_score]
     
     #df_stress_peaks = df_results[df_results['score'] >= 8]
        
@@ -149,6 +149,8 @@ with st.sidebar:
     # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
     df_date = df_score[df_score.date == selected_date]
+    
+    print(df_date)
     
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)

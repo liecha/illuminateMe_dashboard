@@ -114,10 +114,6 @@ def make_barplot():
     barplot = alt.Chart(source).mark_bar().encode(
             x='a',
             y='b'
-        ).properties(width=900
-        ).configure_axis(
-        labelFontSize=12,
-        titleFontSize=12
         ) 
     return barplot
 

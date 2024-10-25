@@ -76,7 +76,7 @@ df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv'
 with st.sidebar:
     st.title('🏂 US Population Dashboard')
     
-    df_stress_peaks = df_results[df_results['score'] >= 10]
+    df_stress_peaks = df_results[df_results['score'] >= 8]
     #df_stress_peaks = df_stress_peaks[["date", "time", "weekday"]].reset_index(drop=True, inplace=True)
     date_list_score = df_stress_peaks.groupby(['date']).count()
     date_list = date_list_score.index
@@ -203,24 +203,24 @@ with col[0]:
     #df_selected_date.reset_index(drop=True, inplace=True)  
 
     st.dataframe(df_selected_date,
-                 column_order=("date", "time", "weekday"),
+                 column_order=("date", "time", "score"),
                  hide_index=True,
                  width=None,
                  column_config={
                     "date": st.column_config.TextColumn(
                         "Date",
                     ),
-                    "time": st.column_config.ProgressColumn(
+                    "time": st.column_config.TextColumn(
                         "Time",
-                        format="%f",
-                        min_value=0,
-                        max_value=max(df_stress_peaks.time),
-                     ),
-                    "weekday": st.column_config.ProgressColumn(
+                    ),
+                    "weekday": st.column_config.TextColumn(
                         "Weekday",
+                    ),
+                    "score": st.column_config.ProgressColumn(
+                        "Score",
                         format="%f",
                         min_value=0,
-                        max_value=max(df_stress_peaks.weekday),
+                        max_value=max(df_stress_peaks.score),
                      )}
                  )
 

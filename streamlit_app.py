@@ -91,15 +91,15 @@ def sports_prepp(df_sports):
     # 60 ?? FRI RÖRELSE ??
     
     dict_sports = {
-        1: "running", 
-        6: "walking", 
-        8: "indoor running", 
-        10: "cycling", 
-        14: "swimming", 
-        16: "free movement", 
-        50: "core", 
-        52: "strength",
-        60: "unknown"
+        1: "- Running", 
+        6: "- Walking", 
+        8: "- Indoor running", 
+        10: "- Cycling", 
+        14: "- Swimming", 
+        16: "- Free movement", 
+        50: "- Core", 
+        52: "- Strength",
+        60: "- Unknown"
     }
     
     df_sports['type_text'] = df_sports['type'].map(dict_sports)
@@ -146,7 +146,7 @@ with st.sidebar:
     # 10: diff == 40-   
     stress_scores = [10, 8, 6, 4, 2, 1]
     selected_score = st.selectbox('Select score', stress_scores)
-    df_score = df_results[df_results.score == selected_score]
+    df_score = df_results[df_results.score >= selected_score]
 
        
     # DATE SELECTION

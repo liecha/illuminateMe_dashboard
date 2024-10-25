@@ -34,7 +34,7 @@ st.markdown("""
 }
 
 [data-testid="stMetric"] {
-    background-color: #393939;
+    background-color: #599191;
     text-align: center;
     padding: 15px 0;
 }

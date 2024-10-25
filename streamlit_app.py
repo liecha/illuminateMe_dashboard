@@ -108,25 +108,33 @@ def sports_prepp(df_sports):
 def sport_selection(df_sports_prepp, selected_date):
     sport_selection = []
     
-    # Singel day
+    # Select date
     for i in range(0, len(df_sports_prepp)):
         if str(df_sports_prepp['date'].iloc[i].date()) == selected_date:
             sport_selection.append(df_sports_prepp.iloc[i])
     df_sport_date= pd.concat(sport_selection, axis = 1).T.sort_values(by=['date_time'])
     
-    time_sport = [] 
-
-    # Singel day
+    # Select time
+    time_sport = []    
     for i in range(0, len(df_sport_date)):
         time_sport.append(df_sport_date['date'].iloc[i].strftime("%H:%M"))
-
-    return df_sport_date, time_sport
+    df_sport_date['time'] = time_sport
+    
+    # Select label
+    bar_labels = [] 
+    types = df_sport_date['type_text'].values
+    for i in range(0, len(time_sport)):
+        bar_labels.append(time_sport[i] + ' ' + types[i])
+    df_sport_date['labels'] = bar_labels
+    
+    return df_sport_date
 
 #######################
 # Sidebar
 with st.sidebar:
     #st.title('🏂 US Population Dashboard')
     st.image("illuminateMe_logo.png")
+    
     
     # SCORE SELECTION
     # Stress scale:
@@ -139,28 +147,23 @@ with st.sidebar:
     stress_scores = [10, 8, 6, 4, 2, 1]
     selected_score = st.selectbox('Select score', stress_scores)
     df_score = df_results[df_results.score == selected_score]
-    
-    #df_stress_peaks = df_results[df_results['score'] >= 8]
+
        
     # DATE SELECTION
     date_list_score = df_score.groupby(['date']).count()
     date_list = date_list_score.index
+ 
     
     # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
     df_date = df_score[df_score.date == selected_date]
-    
-    print(df_date)
+
     
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)
-    #df_sport_date, time_sport = sport_selection(df_sports_prepp, selected_date)
+    df_sport_date = sport_selection(df_sports_prepp, selected_date)
 
 
-
-
-    #df_selected_date_sorted = df_score_date.sort_values(by="date", ascending=False)
-    
     
     # OLD CODE
     year_list = list(df_reshaped.year.unique())[::-1]    
@@ -176,15 +179,15 @@ with st.sidebar:
 # Plots
 
 # Barplot
-def make_barplot():
+def make_barplot(input_df):
     source = pd.DataFrame({
         'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
         'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
     })
     
-    barplot = alt.Chart(source).mark_bar().encode(
-            x='a',
-            y='b'
+    barplot = alt.Chart(input_df).mark_bar().encode(
+            x='time',
+            y='sportTime(s)'
         ) 
     return barplot
 
@@ -313,6 +316,7 @@ with col[0]:
                  )
 
 
+    st.markdown('#### Quality')
     st.dataframe(df_selected_year_sorted,
                  column_order=("states", "population"),
                  hide_index=True,
@@ -332,8 +336,8 @@ with col[0]:
 with col[1]:
     st.markdown('#### Stress factors')
            
-    heatmap = make_barplot()
-    st.altair_chart(heatmap, use_container_width=True)
+    barplot_sport = make_barplot(df_sport_date)
+    st.altair_chart(barplot_sport, use_container_width=True)
             
     choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)
     st.plotly_chart(choropleth, use_container_width=True)

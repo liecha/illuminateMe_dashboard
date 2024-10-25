@@ -80,9 +80,11 @@ with st.sidebar:
     date_list_score = df_stress_peaks.groupby(['date']).count()
     date_list = date_list_score.index
     
-    year_list = list(df_reshaped.year.unique())[::-1]
+    selected_date = st.selectbox('Select a date', date_list)
+    df_selected_date = df_stress_peaks[df_stress_peaks.date == selected_date]
+    df_selected_date_sorted = df_selected_date.sort_values(by="date", ascending=False)
     
-    selected_year = st.selectbox('Select a date', date_list)
+    year_list = list(df_reshaped.year.unique())[::-1]    
     selected_year = st.selectbox('Select a year', year_list)
     df_selected_year = df_reshaped[df_reshaped.year == selected_year]
     df_selected_year_sorted = df_selected_year.sort_values(by="population", ascending=False)
@@ -196,7 +198,7 @@ col = st.columns((4.5, 4.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     
-    st.dataframe(df_stress_peaks[["date", "time", "weekday"]],
+    st.dataframe(df_stress_peaks,
                  column_order=("date", "time", "weekday"),
                  hide_index=True,
                  width=None,

@@ -68,6 +68,7 @@ st.markdown("""
 #######################
 # Load data
 df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
+df_results = pd.read_csv('/data/results_20241024_all_points_training_7200min.csv')
 
 
 #######################
@@ -75,9 +76,13 @@ df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
 with st.sidebar:
     st.title('🏂 US Population Dashboard')
     
+    result_score_10 = df_results[df_results['score'] >= 10]
+    date_list_score = result_score_10.groupby(['date']).count()
+    date_list = date_list_score.index
+    
     year_list = list(df_reshaped.year.unique())[::-1]
     
-    selected_year = st.selectbox('Select a year', year_list)
+    selected_year = st.selectbox('Select a date', date_list)
     df_selected_year = df_reshaped[df_reshaped.year == selected_year]
     df_selected_year_sorted = df_selected_year.sort_values(by="population", ascending=False)
 

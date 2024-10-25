@@ -152,7 +152,7 @@ with st.sidebar:
     
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)
-    df_sport_date, time_sport = sport_selection(df_sports_prepp, selected_date)
+    #df_sport_date, time_sport = sport_selection(df_sports_prepp, selected_date)
 
 
 

@@ -188,6 +188,35 @@ def calculate_population_difference(input_df, input_year):
 col = st.columns((1.5, 4.5, 2), gap='medium')
 
 with col[0]:
+    st.markdown('#### Stress peaks')
+
+    st.dataframe(df_selected_year_sorted,
+                 column_order=("states", "population"),
+                 hide_index=True,
+                 width=None,
+                 column_config={
+                    "states": st.column_config.TextColumn(
+                        "States",
+                    ),
+                    "population": st.column_config.ProgressColumn(
+                        "Population",
+                        format="%f",
+                        min_value=0,
+                        max_value=max(df_selected_year_sorted.population),
+                     )}
+                 )
+
+with col[1]:
+    st.markdown('#### Total Population')
+    
+    choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)
+    st.plotly_chart(choropleth, use_container_width=True)
+    
+    heatmap = make_heatmap(df_reshaped, 'year', 'states', 'population', selected_color_theme)
+    st.altair_chart(heatmap, use_container_width=True)
+    
+
+with col[2]:
     st.markdown('#### Gains/Losses')
 
     df_population_difference_sorted = calculate_population_difference(df_reshaped, selected_year)
@@ -238,35 +267,6 @@ with col[0]:
         st.altair_chart(donut_chart_greater)
         st.write('Outbound')
         st.altair_chart(donut_chart_less)
-
-with col[1]:
-    st.markdown('#### Total Population')
-    
-    choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)
-    st.plotly_chart(choropleth, use_container_width=True)
-    
-    heatmap = make_heatmap(df_reshaped, 'year', 'states', 'population', selected_color_theme)
-    st.altair_chart(heatmap, use_container_width=True)
-    
-
-with col[2]:
-    st.markdown('#### Top States')
-
-    st.dataframe(df_selected_year_sorted,
-                 column_order=("states", "population"),
-                 hide_index=True,
-                 width=None,
-                 column_config={
-                    "states": st.column_config.TextColumn(
-                        "States",
-                    ),
-                    "population": st.column_config.ProgressColumn(
-                        "Population",
-                        format="%f",
-                        min_value=0,
-                        max_value=max(df_selected_year_sorted.population),
-                     )}
-                 )
     
     with st.expander('About', expanded=True):
         st.write('''

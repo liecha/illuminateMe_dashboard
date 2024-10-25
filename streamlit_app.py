@@ -128,14 +128,27 @@ with st.sidebar:
     #st.title('🏂 US Population Dashboard')
     st.image("illuminateMe_logo.png")
     
-    # SCORE
-    df_stress_peaks = df_results[df_results['score'] >= 8]
-    date_list_score = df_stress_peaks.groupby(['date']).count()
+    # SCORE SELECTION
+    # Stress scale:
+    # 1: diff == 0-5
+    # 2: diff == 5-10
+    # 4: diff == 10-20
+    # 6: diff == 20-30
+    # 8: diff == 30-40
+    # 10: diff == 40-   
+    stress_scores = [1, 2, 4, 6, 8, 10]
+    selected_score = st.selectbox('Select score', stress_scores)
+    df_score = df_results[df_results.date == selected_score]
+    
+    #df_stress_peaks = df_results[df_results['score'] >= 8]
+       
+    # DATE SELECTION
+    date_list_score = df_score.groupby(['date']).count()
     date_list = date_list_score.index
     
     # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
-    df_score_date = df_stress_peaks[df_stress_peaks.date == selected_date]
+    df_date = df_score[df_score.date == selected_date]
     
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)
@@ -144,7 +157,7 @@ with st.sidebar:
 
 
 
-    df_selected_date_sorted = df_score_date.sort_values(by="date", ascending=False)
+    #df_selected_date_sorted = df_score_date.sort_values(by="date", ascending=False)
     
     
     # OLD CODE

@@ -317,7 +317,7 @@ with col[0]:
 with col[1]:
     st.markdown('#### Stress factors')
            
-    heatmap = make_barplot(df_sport_date, 'sportTime(s)', time_sport)
+    heatmap = make_barplot()
     st.altair_chart(heatmap, use_container_width=True)
             
     choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)

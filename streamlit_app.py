@@ -195,7 +195,7 @@ def calculate_population_difference(input_df, input_year):
 
 #######################
 # Dashboard Main Panel
-col = st.columns((3.5, 5.5), gap='medium')
+col = st.columns((2.6, 6.5), gap='medium')
 
 with col[0]:
     st.markdown('#### Stress peaks')

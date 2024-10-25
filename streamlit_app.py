@@ -15,6 +15,8 @@ st.set_page_config(
 
 alt.themes.enable("dark")
 
+# Color illuminateMe #599191
+
 #######################
 # CSS styling
 st.markdown("""
@@ -34,7 +36,7 @@ st.markdown("""
 }
 
 [data-testid="stMetric"] {
-    background-color: #599191;
+    background-color: #393939;
     text-align: center;
     padding: 15px 0;
 }
@@ -75,7 +77,8 @@ df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv'
 #######################
 # Sidebar
 with st.sidebar:
-    st.title('🏂 US Population Dashboard')
+    #st.title('🏂 US Population Dashboard')
+    st.image("illuminateMe_logo.png", caption="SLogo illuminateMe")
     
     df_stress_peaks = df_results[df_results['score'] >= 8]
     date_list_score = df_stress_peaks.groupby(['date']).count()

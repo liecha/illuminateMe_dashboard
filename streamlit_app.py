@@ -76,8 +76,8 @@ df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv'
 with st.sidebar:
     st.title('🏂 US Population Dashboard')
     
-    result_score_10 = df_results[df_results['score'] >= 10]
-    date_list_score = result_score_10.groupby(['date']).count()
+    df_stress_peaks = df_results[df_results['score'] >= 10]
+    date_list_score = df_stress_peaks.groupby(['date']).count()
     date_list = date_list_score.index
     
     year_list = list(df_reshaped.year.unique())[::-1]
@@ -195,6 +195,31 @@ col = st.columns((4.5, 4.5), gap='medium')
 
 with col[0]:
     st.markdown('#### Stress peaks')
+    
+    df_stress_peaks
+    
+    st.dataframe(df_stress_peaks,
+                 column_order=("date", "time", "weekday"),
+                 hide_index=True,
+                 width=None,
+                 column_config={
+                    "date": st.column_config.TextColumn(
+                        "Date",
+                    ),
+                    "time": st.column_config.ProgressColumn(
+                        "Time",
+                        format="%f",
+                        min_value=0,
+                        max_value=max(df_stress_peaks.time),
+                     ),
+                    "weekday": st.column_config.ProgressColumn(
+                        "Weekday",
+                        format="%f",
+                        min_value=0,
+                        max_value=max(df_stress_peaks.time),
+                     )}
+                 )
+
 
     st.dataframe(df_selected_year_sorted,
                  column_order=("states", "population"),

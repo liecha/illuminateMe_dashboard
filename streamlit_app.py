@@ -78,7 +78,7 @@ df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv'
 # Sidebar
 with st.sidebar:
     #st.title('🏂 US Population Dashboard')
-    st.image("illuminateMe_logo.png", caption="SLogo illuminateMe")
+    st.image("illuminateMe_logo.png")
     
     df_stress_peaks = df_results[df_results['score'] >= 8]
     date_list_score = df_stress_peaks.groupby(['date']).count()

@@ -71,8 +71,56 @@ st.markdown("""
 # Load data
 df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
 df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv')
-#df_results = pd.read_csv('data/results_20241021_win_batch_1140_training_240min.csv')
+df_sports = pd.read_csv('data/SPORT_1729522447097.csv')
 
+#######################
+# Selection functions
+
+def sports_prepp(df_sports):
+    df_sports['date_time'] = pd.to_datetime(df_sports['startTime'], format="%Y-%m-%d %H:%M:%S+0000")
+    df_sports['date'] = pd.to_datetime(df_sports['date_time'], format="%Y-%m-%d")
+    
+    # 1 RUN
+    # 6 WALK
+    # 8 INDOOR RUNNING
+    # 10 CYKEL
+    # 14 SWIM
+    # 16 ?? FRI RÖRELSE ??
+    # 50 CORE
+    # 52 STYRKETRÄNING
+    # 60 ?? FRI RÖRELSE ??
+    
+    dict_sports = {
+        1: "running", 
+        6: "walking", 
+        8: "indoor running", 
+        10: "cycling", 
+        14: "swimming", 
+        16: "free movement", 
+        50: "core", 
+        52: "strength",
+        60: "unknown"
+    }
+    
+    df_sports['type_text'] = df_sports['type'].map(dict_sports)
+    return df_sports
+
+def sport_selection(df_sports_prepp, selected_date):
+    sport_selection = []
+    
+    # Singel day
+    for i in range(0, len(df_sports_prepp)):
+        if str(df_sports_prepp['date'].iloc[i].date()) == selected_date:
+            sport_selection.append(df_sports_prepp.iloc[i])
+    df_sport_date= pd.concat(sport_selection, axis = 1).T.sort_values(by=['date_time'])
+    
+    time_sport = [] 
+
+    # Singel day
+    for i in range(0, len(df_sport_date)):
+        time_sport.append(df_sport_date['date'].iloc[i].strftime("%H:%M"))
+
+    return df_sport_date, time_sport
 
 #######################
 # Sidebar
@@ -80,15 +128,26 @@ with st.sidebar:
     #st.title('🏂 US Population Dashboard')
     st.image("illuminateMe_logo.png")
     
+    # SCORE
     df_stress_peaks = df_results[df_results['score'] >= 8]
     date_list_score = df_stress_peaks.groupby(['date']).count()
     date_list = date_list_score.index
     
+    # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
-    df_selected_date = df_stress_peaks[df_stress_peaks.date == selected_date]
-    print(df_selected_date)
-    df_selected_date_sorted = df_selected_date.sort_values(by="date", ascending=False)
+    df_score_date = df_stress_peaks[df_stress_peaks.date == selected_date]
     
+    # SPORT
+    df_sports_prepp = sports_prepp(df_sports)
+    df_sport_date, time_sport = sport_selection(df_sports_prepp, selected_date)
+
+
+
+
+    df_selected_date_sorted = df_score_date.sort_values(by="date", ascending=False)
+    
+    
+    # OLD CODE
     year_list = list(df_reshaped.year.unique())[::-1]    
     selected_year = st.selectbox('Select a year', year_list)
     df_selected_year = df_reshaped[df_reshaped.year == selected_year]
@@ -102,15 +161,11 @@ with st.sidebar:
 # Plots
 
 # Barplot
-def make_barplot():
-    source = pd.DataFrame({
-        'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
-        'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
-    })
+def make_barplot(input_df, input_y, input_x):
     
-    barplot = alt.Chart(source).mark_bar().encode(
-            x='a',
-            y='b'
+    barplot = alt.Chart(input_df).mark_bar().encode(
+            x=input_x,
+            y=input_y
         ) 
     return barplot
 
@@ -216,9 +271,7 @@ col = st.columns((3.0, 5.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     
-    #df_selected_date.reset_index(drop=True, inplace=True)  
-
-    st.dataframe(df_selected_date,
+    st.dataframe(df_score_date,
                  column_order=("date", "time", "score"),
                  hide_index=True,
                  width=None,
@@ -258,9 +311,9 @@ with col[0]:
                  )
 
 with col[1]:
-    st.markdown('#### Total Population')
+    st.markdown('#### Stress factors')
            
-    heatmap = make_barplot()
+    heatmap = make_barplot(df_sport_date, 'sportTime(s)', time_sport)
     st.altair_chart(heatmap, use_container_width=True)
             
     choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)

@@ -288,7 +288,7 @@ col = st.columns((3.0, 5.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     
-    st.dataframe(df_score_date,
+    st.dataframe(df_date,
                  column_order=("date", "time", "score"),
                  hide_index=True,
                  width=None,
@@ -306,7 +306,7 @@ with col[0]:
                         "Score",
                         format="%f",
                         min_value=0,
-                        max_value=max(df_stress_peaks.score),
+                        max_value=max(df_date.score),
                      )}
                  )
 

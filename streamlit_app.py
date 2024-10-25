@@ -179,15 +179,10 @@ with st.sidebar:
 # Plots
 
 # Barplot
-def make_barplot(input_df):
-    source = pd.DataFrame({
-        'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
-        'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
-    })
-    
+def make_barplot(input_df, input_y, input_x):    
     barplot = alt.Chart(input_df).mark_bar().encode(
-            x='time',
-            y='sportTime(s)'
+            x=input_x, #'labels',
+            y=input_y #'sportTime(s)'
         ) 
     return barplot
 
@@ -335,8 +330,8 @@ with col[0]:
 
 with col[1]:
     st.markdown('#### Stress factors')
-           
-    barplot_sport = make_barplot(df_sport_date)
+       
+    barplot_sport = make_barplot(df_sport_date, 'sportTime(s)', 'labels')
     st.altair_chart(barplot_sport, use_container_width=True)
             
     choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)

@@ -157,11 +157,8 @@ def sleep_selection(df_sleep, selected_date):
 # Sidebar
 with st.sidebar:
     st.image("illuminateMe_logo.png")
-    st.divider()
     st.caption("_:blue[User:]_")
-    st.markdown('Emelie Chandni Jutvik') 
-    st.divider()
-    
+    st.markdown('Emelie Chandni Jutvik')    
     # SCORE SELECTION
     # Stress scale:
     # 1: diff == 0-5

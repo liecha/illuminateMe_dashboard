@@ -356,7 +356,7 @@ with col[0]:
     st.caption("This is a string that explains something above.")
     st.caption("A caption with _italics_ :blue[colors] and emojis :sunglasses:")
     
-    with st.expander('About', expanded=True):
+    with st.expander('About deep sleep', expanded=True):
         st.write('''
             Deep sleep typically happen during the first half of the night. 
             It is recommended to aim for about 13 to 23 percent of your sleep 

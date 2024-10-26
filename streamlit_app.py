@@ -147,9 +147,13 @@ def sleep_prepp(df_sleep):
 
 def sleep_selection(df_sleep, selected_date):
     df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
+    sleep_time = df_sleep_date['total_hours'].values
+    print(sleep_time)
+    df_sleep_date = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime', 'total_sleep']]
     total_sleep = df_sleep_date['total_sleep'].values[0]
     df_sleep_date = df_sleep_date.div(total_sleep).round(4) * 100
-    return df_sleep_date
+    print(df_sleep_date)
+    return df_sleep_date, sleep_time
 
 #######################
 # Sidebar
@@ -185,7 +189,7 @@ with st.sidebar:
 
     # SLEEP
     df_sleep_prepp = sleep_prepp(df_sleep)
-    df_sleep_date = sleep_selection(df_sleep_prepp, selected_date)
+    df_sleep_date, sleep_time = sleep_selection(df_sleep_prepp, selected_date)
 
  
    

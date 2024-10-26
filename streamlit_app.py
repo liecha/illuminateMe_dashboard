@@ -133,7 +133,7 @@ def sport_selection(df_sports_prepp, selected_date):
 # Sidebar
 with st.sidebar:
     st.image("illuminateMe_logo.png")
-    st.title('Emelie Chandni Jutvik') 
+    st.subheader('Emelie Chandni Jutvik') 
     
     # SCORE SELECTION
     # Stress scale:
@@ -329,7 +329,7 @@ with col[0]:
 
 with col[1]:
     st.markdown('#### Indicators')
-    st.title('Activity')  
+    st.subheader('Activity')  
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
             

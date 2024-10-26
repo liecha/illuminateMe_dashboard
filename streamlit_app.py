@@ -245,7 +245,7 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 
 # Donut chart
-def make_donut(source, input_text, input_color):
+def make_donut(source, input_color):
    
     if input_color == 'blue':
         chart_color = ['#29b5e8', '#155F7A']
@@ -256,6 +256,7 @@ def make_donut(source, input_text, input_color):
     if input_color == 'red':
         chart_color = ['#E74C3C', '#781F16']
     
+    input_text = 'test'
     donut_chart =  alt.Chart(source).mark_arc(innerRadius=45, cornerRadius=25).encode(
         theta="value",
         color="category:N",

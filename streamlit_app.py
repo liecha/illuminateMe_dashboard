@@ -349,7 +349,7 @@ with col[0]:
     })
     donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
-    st.metric(label='Hours', value=df_sleep_date['total_hours'].values, delta='first_state_delta')
+    st.metric(label='Hours', value=df_sleep_date['total_hours'].values[0], delta='first_state_delta')
     
     st.markdown('#### Quality')
     st.dataframe(df_selected_year_sorted,

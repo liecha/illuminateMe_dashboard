@@ -274,7 +274,7 @@ def make_donut(source, input_color):
                             range=chart_color),  # 31333F
                         legend=None),
     ).properties(width=130, height=130)
-    return donut_chart, text, plot_bg
+    return plot_bg + donut_chart + text
 
 def old_make_donut(input_response, input_text, input_color):
   if input_color == 'blue':

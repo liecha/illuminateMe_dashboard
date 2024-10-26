@@ -344,7 +344,8 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
-    st.write("You where sleeping for _italics_ :blue[" + sleep_time + "] ")
+    st.write("You where sleeping for:")
+    st.write(sleep_time)
     categories_sleep = ['deep sleep', 'shallow sleep', 'awake sleep']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({

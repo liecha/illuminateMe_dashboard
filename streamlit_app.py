@@ -353,6 +353,8 @@ with col[0]:
     donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
     st.caption('Sleep time: ' + sleep_time)
+    st.caption("This is a string that explains something above.")
+    st.caption("A caption with _italics_ :blue[colors] and emojis :sunglasses:")
     
     with st.expander('About', expanded=True):
         st.write('''

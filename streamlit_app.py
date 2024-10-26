@@ -258,7 +258,6 @@ def make_donut(source, input_text, input_color):
         
     donut_chart =  alt.Chart(source).mark_arc(innerRadius=45, cornerRadius=25).encode(
         theta="value",
-        color="category:N",
         color= alt.Color("category:N",
                         scale=alt.Scale(
                             #domain=['A', 'B'],

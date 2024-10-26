@@ -192,17 +192,6 @@ with st.sidebar:
     df_sleep_prepp = sleep_prepp(df_sleep)
     df_sleep_date, sleep_time = sleep_selection(df_sleep_prepp, selected_date)
 
- 
-   
-    # OLD CODE
-    year_list = list(df_reshaped.year.unique())[::-1]    
-    selected_year = st.selectbox('Select a year', year_list)
-    df_selected_year = df_reshaped[df_reshaped.year == selected_year]
-    df_selected_year_sorted = df_selected_year.sort_values(by="population", ascending=False)
-
-    color_theme_list = ['blues', 'cividis', 'greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
-    selected_color_theme = st.selectbox('Select a color theme', color_theme_list)
-
 
 #######################
 # Plots
@@ -233,6 +222,7 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
     # height=300
     return heatmap
 
+'''
 # Choropleth map
 def make_choropleth(input_df, input_id, input_column, input_color_theme):
     choropleth = px.choropleth(input_df, locations=input_id, color=input_column, locationmode="USA-states",
@@ -249,7 +239,7 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
         height=350
     )
     return choropleth
-
+'''
 
 # Donut chart
 def make_donut(source):    
@@ -365,24 +355,6 @@ with col[0]:
             aim to get between an hour or just under two hours of deep sleep.
             ''')
     
-    
-    
-    st.markdown('#### Quality')
-    st.dataframe(df_selected_year_sorted,
-                 column_order=("states", "population"),
-                 hide_index=True,
-                 width=None,
-                 column_config={
-                    "states": st.column_config.TextColumn(
-                        "States",
-                    ),
-                    "population": st.column_config.ProgressColumn(
-                        "Population",
-                        format="%f",
-                        min_value=0,
-                        max_value=max(df_selected_year_sorted.population),
-                     )}
-                 )
 
 with col[1]:
     st.subheader('Indicators')
@@ -390,5 +362,6 @@ with col[1]:
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
             
-    choropleth = make_choropleth(df_selected_year, 'states_code', 'population', selected_color_theme)
-    st.plotly_chart(choropleth, use_container_width=True)
+    st.markdown('#### Events')  
+    barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
+    st.altair_chart(barplot_sport, use_container_width=True)

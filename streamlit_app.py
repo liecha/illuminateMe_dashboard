@@ -160,7 +160,7 @@ def sleep_selection(df_sleep, selected_date):
 # Sidebar
 with st.sidebar:
     st.image("illuminateMe_logo.png")
-    s#t.markdown('Emelie Chandni Jutvik')    
+    #t.markdown('Emelie Chandni Jutvik')    
     
     # SCORE SELECTION
     # Stress scale:

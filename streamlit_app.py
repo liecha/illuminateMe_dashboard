@@ -158,6 +158,7 @@ def sleep_selection(df_sleep, selected_date):
 with st.sidebar:
     st.image("illuminateMe_logo.png")
     st.markdown('Emelie Chandni Jutvik')    
+    
     # SCORE SELECTION
     # Stress scale:
     # 1: diff == 0-5

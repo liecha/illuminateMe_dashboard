@@ -148,11 +148,9 @@ def sleep_prepp(df_sleep):
 def sleep_selection(df_sleep, selected_date):
     df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
     sleep_time = df_sleep_date['total_hours'].values
-    print(sleep_time)
     df_sleep_date = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime', 'total_sleep']]
     total_sleep = df_sleep_date['total_sleep'].values[0]
     df_sleep_date = df_sleep_date.div(total_sleep).round(4) * 100
-    print(df_sleep_date)
     return df_sleep_date, sleep_time
 
 #######################
@@ -354,6 +352,7 @@ with col[0]:
     })
     donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
+    st.caption('Sleep time: ' + sleep_time)
     
     with st.expander('About', expanded=True):
         st.write('''

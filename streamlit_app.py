@@ -353,14 +353,11 @@ with col[0]:
     })
     donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
-    st.caption('Sleep time: ' + sleep_time)
-    st.caption("This is a string that explains something above.")
-    st.caption("A caption with _italics_ :blue[colors] and emojis :sunglasses:")
     
     with st.expander('About deep sleep', expanded=True):
         st.caption('''
             Deep sleep typically happen during the first half of the night. 
-            It is recommended to aim for about _italics_:blue[13 to 23 percent] of your sleep 
+            It is recommended to aim for about _italics:blue[13 to 23 percent]_ of your sleep 
             to be in this stages. This means - if you sleep 8 hours, you should 
             aim to get between an hour or just under two hours of deep sleep.
             ''')

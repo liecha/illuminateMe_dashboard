@@ -8,7 +8,7 @@ import plotly.express as px
 #######################
 # Page configuration
 st.set_page_config(
-    page_title="ImmluminateMe Dashboard",
+    page_title="IlluminateMe Dashboard",
     page_icon="",
     layout="wide",
     initial_sidebar_state="expanded")
@@ -245,27 +245,11 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 
 # Donut chart
-def make_donut(source, input_text, input_color): 
-    
-    if input_color == 'blue':
-        chart_color = ['#29b5e8', '#155F7A']
-    if input_color == 'green':
-        chart_color = ['#27AE60', '#12783D']
-    if input_color == 'orange':
-        chart_color = ['#F39C12', '#875A12']
-    if input_color == 'red':
-        chart_color = ['#E74C3C', '#781F16']
-        
-    donut_chart =  alt.Chart(source).mark_arc(innerRadius=45, cornerRadius=25).encode(
+def make_donut(source):    
+    donut_chart =  alt.Chart(source).mark_arc(innerRadius=50).encode(
         theta="value",
-        color= alt.Color("category:N",
-                        scale=alt.Scale(
-                            #domain=['A', 'B'],
-                            domain=[input_text, ''],
-                            # range=['#29b5e8', '#155F7A']),  # 31333F
-                            range=chart_color),
-                        legend=None),
-    ).properties(width=130, height=130)
+        color="category:N",
+    )   
     return donut_chart
 
 def old_make_donut(input_response, input_text, input_color):
@@ -355,17 +339,15 @@ with col[0]:
                      )}
                  )
     
-    
-
     st.markdown('#### Sleep')
-    st.metric(label='Hours of sleep', value=df_sleep_date['total_hours'].values[0], delta='first_state_delta')
+    #st.metric(label='Hours of sleep', value=df_sleep_date['total_hours'].values[0], delta='first_state_delta')
     categories_sleep = ['deep', 'shallow', 'wake']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({
         "category": categories_sleep,
         "value": values
     })
-    donut_sleep = make_donut(source, 'Sleep quality', 'blue')
+    donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
     
     st.markdown('#### Quality')

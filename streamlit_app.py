@@ -355,6 +355,13 @@ with col[0]:
     donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
     
+    with st.expander('About', expanded=True):
+        st.write('''
+            You should aim for about 13 to 23 percent of your sleep to be in deep sleep.
+            ''')
+    
+    
+    
     st.markdown('#### Quality')
     st.dataframe(df_selected_year_sorted,
                  column_order=("states", "population"),

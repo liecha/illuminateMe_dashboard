@@ -245,41 +245,12 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 
 # Donut chart
-def make_donut(source, input_color):
-   
-    if input_color == 'blue':
-        chart_color = ['#29b5e8', '#155F7A']
-    if input_color == 'green':
-        chart_color = ['#27AE60', '#12783D']
-    if input_color == 'orange':
-        chart_color = ['#F39C12', '#875A12']
-    if input_color == 'red':
-        chart_color = ['#E74C3C', '#781F16']
-    
-    input_text = 'test'
-    donut_chart =  alt.Chart(source).mark_arc(innerRadius=45, cornerRadius=25).encode(
+def make_donut(source):    
+    donut_chart =  alt.Chart(source).mark_arc(innerRadius=50).encode(
         theta="value",
         color="category:N",
     )
-
-    source_bg = pd.DataFrame({
-        "Topic": ['', input_text],
-        "% value": [100, 0]
-    })
-    
-    input_response = 'p_sleep'
-    text = donut_chart.mark_text(align='center', color="#29b5e8", font="Lato", fontSize=32, fontWeight=700, fontStyle="italic").encode(text=alt.value(f'{input_response} %'))
-    
-    plot_bg = alt.Chart(source_bg).mark_arc(innerRadius=45, cornerRadius=20).encode(
-        theta="% value",
-        color= alt.Color("Topic:N",
-                        scale=alt.Scale(
-                            # domain=['A', 'B'],
-                            domain=[input_text, ''],
-                            range=chart_color),  # 31333F
-                        legend=None),
-    ).properties(width=130, height=130)
-    return donut_chart 
+    return donut_chart
 
 def old_make_donut(input_response, input_text, input_color):
   if input_color == 'blue':
@@ -375,12 +346,8 @@ with col[0]:
         "category": categories_sleep,
         "value": values
     })
-    donut_sleep = make_donut(source, 'green')
+    donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
-    st.write('''
-        Deep sleep typically happen during the first half of the night. 
-        You should aim for about 13-23% of your sleep to be in these stages. 
-        ''')
     
     st.markdown('#### Quality')
     st.dataframe(df_selected_year_sorted,

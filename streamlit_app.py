@@ -16,6 +16,9 @@ st.set_page_config(
 alt.themes.enable("dark")
 
 # Color illuminateMe #599191
+# Color in eye #51be9e
+# Color orange #ffd966
+# Color blue in eye #2a2f64
 
 #######################
 # CSS styling

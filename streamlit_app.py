@@ -157,7 +157,6 @@ with st.sidebar:
     selected_date = st.selectbox('Select a date', date_list)
     df_date = df_score[df_score.date == selected_date]
 
-    
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)
     df_sport_date = sport_selection(df_sports_prepp, selected_date)
@@ -222,7 +221,20 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 
 # Donut chart
-def make_donut(input_response, input_text, input_color):
+def make_donut():
+    source = pd.DataFrame({
+        "category": [1, 2, 3, 4, 5, 6],
+        "value": [4, 6, 10, 3, 7, 8]
+    })
+    
+    donut_chart =  alt.Chart(source).mark_arc(innerRadius=50).encode(
+        theta="value",
+        color="category:N",
+    )
+   
+    return donut_chart
+
+def old_make_donut(input_response, input_text, input_color):
   if input_color == 'blue':
       chart_color = ['#29b5e8', '#155F7A']
   if input_color == 'green':
@@ -285,7 +297,7 @@ def calculate_population_difference(input_df, input_year):
 col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:
-    st.subheader('#### Stress peaks')
+    st.subheader('Stress peaks')
     
     st.dataframe(df_date,
                  column_order=("date", "time", "score"),
@@ -308,8 +320,11 @@ with col[0]:
                         max_value=max(df_date.score),
                      )}
                  )
-
-
+    
+    st.markdown('#### Sleep')  
+    donut_sleep = make_donut()
+    st.altair_chart(donut_sleep, use_container_width=True)
+    
     st.markdown('#### Quality')
     st.dataframe(df_selected_year_sorted,
                  column_order=("states", "population"),
@@ -328,8 +343,8 @@ with col[0]:
                  )
 
 with col[1]:
-    st.subheader('#### Indicators')
-    st.markdown('Activity')  
+    st.subheader('Indicators')
+    st.markdown('#### Activity')  
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
             

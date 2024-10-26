@@ -133,7 +133,7 @@ def sport_selection(df_sports_prepp, selected_date):
 # Sidebar
 with st.sidebar:
     st.image("illuminateMe_logo.png")
-    st.subheader('Emelie Chandni Jutvik') 
+    st.markdown('Emelie Chandni Jutvik') 
     
     # SCORE SELECTION
     # Stress scale:
@@ -285,7 +285,7 @@ def calculate_population_difference(input_df, input_year):
 col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:
-    st.markdown('#### Stress peaks')
+    st.subheader('#### Stress peaks')
     
     st.dataframe(df_date,
                  column_order=("date", "time", "score"),
@@ -328,8 +328,8 @@ with col[0]:
                  )
 
 with col[1]:
-    st.markdown('#### Indicators')
-    st.subheader('Activity')  
+    st.subheader('#### Indicators')
+    st.markdown('Activity')  
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
             

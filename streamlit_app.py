@@ -147,6 +147,8 @@ def sleep_prepp(df_sleep):
 
 def sleep_selection(df_sleep, selected_date):
     df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
+    total_sleep = df_sleep_date['total_sleep'].values[0]
+    df_sleep_date = df_sleep_date.div(total_sleep).round(4) * 100
     return df_sleep_date
 
 #######################
@@ -246,10 +248,10 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 # Donut chart
 def make_donut(source):    
-    donut_chart =  alt.Chart(source).mark_arc(innerRadius=50).encode(
+    donut_chart =  alt.Chart(source).mark_arc(innerRadius=45, cornerRadius=25).encode(
         theta="value",
         color="category:N",
-    )
+    ).properties(width=130, height=130)
     return donut_chart
 
 def old_make_donut(input_response, input_text, input_color):

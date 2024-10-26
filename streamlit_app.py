@@ -357,7 +357,10 @@ with col[0]:
     
     with st.expander('About', expanded=True):
         st.write('''
-            You should aim for about 13 to 23 percent of your sleep to be in deep sleep.
+            Deep sleep typically happen during the first half of the night. 
+            It is recommended to aim for about 13 to 23 percent of your sleep 
+            to be in this stages. This means - if you sleep 8 hours, you should 
+            aim to get between an hour or just under two hours of deep sleep.
             ''')
     
     

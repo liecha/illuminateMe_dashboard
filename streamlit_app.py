@@ -245,10 +245,10 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 
 # Donut chart
-def make_donut(categories, values):    
-    donut_chart =  alt.Chart().mark_arc(innerRadius=50).encode(
-        theta=values,
-        color=categories,
+def make_donut(source):    
+    donut_chart =  alt.Chart(source).mark_arc(innerRadius=50).encode(
+        theta="value",
+        color="category:N",
     )   
     return donut_chart
 
@@ -343,7 +343,11 @@ with col[0]:
     
     categories_sleep = ['Deep', 'Shallow', 'Wake']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
-    donut_sleep = make_donut(categories_sleep, values)
+    source = pd.DataFrame({
+        "category": categories_sleep,
+        "value": values
+    })
+    donut_sleep = make_donut(source)
     st.altair_chart(donut_sleep, use_container_width=True)
     
     st.markdown('#### Quality')

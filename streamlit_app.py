@@ -135,7 +135,7 @@ def sport_selection(df_sports_prepp, selected_date):
 ### SLEEP
 def define_hours(x):
     import datetime
-    return str(datetime.timedelta(minutes=x)) + ' h'
+    return str(datetime.timedelta(minutes=x)) + ' hours'
 
 
 def sleep_prepp(df_sleep):
@@ -344,6 +344,7 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
+    st.write("You where sleeping for _italics_ :blue[" + sleep_time + "] ")
     categories_sleep = ['deep sleep', 'shallow sleep', 'awake sleep']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({

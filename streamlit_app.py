@@ -72,10 +72,12 @@ st.markdown("""
 df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
 df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv')
 df_sports = pd.read_csv('data/SPORT_1729522447097.csv')
-
+df_sleep = pd.read_csv('data/SLEEP_1729522445075.csv')
 #######################
 # Selection functions
 
+
+### SPORT
 def sports_prepp(df_sports):
     df_sports['date_time'] = pd.to_datetime(df_sports['startTime'], format="%Y-%m-%d %H:%M:%S+0000")
     df_sports['date'] = pd.to_datetime(df_sports['date_time'], format="%Y-%m-%d")
@@ -129,6 +131,24 @@ def sport_selection(df_sports_prepp, selected_date):
     
     return df_sport_date
 
+
+### SLEEP
+def define_hours(x):
+    import datetime
+    return str(datetime.timedelta(minutes=x)) + ' h'
+
+
+def sleep_prepp(df_sleep):
+    column_names = ['deepSleepTime', 'shallowSleepTime', 'wakeTime']
+    df_sleep['total_sleep']= df_sleep[column_names].sum(axis=1)      
+    df_sleep['total_hours'] = df_sleep['total_sleep'].apply(define_hours)
+    return df_sleep
+
+
+def sleep_selection(df_sleep, selected_date):
+    df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
+    return df_sleep_date
+
 #######################
 # Sidebar
 with st.sidebar:
@@ -161,8 +181,12 @@ with st.sidebar:
     df_sports_prepp = sports_prepp(df_sports)
     df_sport_date = sport_selection(df_sports_prepp, selected_date)
 
+    # SLEEP
+    df_sleep_prepp = sleep_prepp(df_sleep)
+    df_sleep_date = sleep_selection(df_sleep_prepp, selected_date)
 
-    
+ 
+   
     # OLD CODE
     year_list = list(df_reshaped.year.unique())[::-1]    
     selected_year = st.selectbox('Select a year', year_list)
@@ -221,17 +245,11 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 
 # Donut chart
-def make_donut():
-    source = pd.DataFrame({
-        "category": [1, 2, 3, 4, 5, 6],
-        "value": [4, 6, 10, 3, 7, 8]
-    })
-    
-    donut_chart =  alt.Chart(source).mark_arc(innerRadius=50).encode(
-        theta="value",
-        color="category:N",
-    )
-   
+def make_donut(categories, values):    
+    donut_chart =  alt.Chart().mark_arc(innerRadius=50).encode(
+        theta=values,
+        color=categories,
+    )   
     return donut_chart
 
 def old_make_donut(input_response, input_text, input_color):
@@ -321,8 +339,11 @@ with col[0]:
                      )}
                  )
     
-    st.markdown('#### Sleep')  
-    donut_sleep = make_donut()
+    st.markdown('#### Sleep')
+    
+    categories_sleep = ['Deep', 'Shallow', 'Wake']
+    values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
+    donut_sleep = make_donut(categories_sleep, values)
     st.altair_chart(donut_sleep, use_container_width=True)
     
     st.markdown('#### Quality')

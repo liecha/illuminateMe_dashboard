@@ -344,8 +344,14 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
-    st.write("You where sleeping for:")
-    st.write(sleep_time)
+    md = st.text_area('Type in your markdown string (without outer quotes)',
+                  sleep_time)
+
+    st.code(f"""
+        import streamlit as st      
+        st.markdown('''{md}''')
+        """)  
+    st.markdown(md)
     categories_sleep = ['deep sleep', 'shallow sleep', 'awake sleep']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({
@@ -359,9 +365,9 @@ with col[0]:
     st.caption("A caption with _italics_ :blue[colors] and emojis :sunglasses:")
     
     with st.expander('About deep sleep', expanded=True):
-        st.write('''
+        st.caption('''
             Deep sleep typically happen during the first half of the night. 
-            It is recommended to aim for about 13 to 23 percent of your sleep 
+            It is recommended to aim for about _italics_ :blue[13 to 23 percent] of your sleep 
             to be in this stages. This means - if you sleep 8 hours, you should 
             aim to get between an hour or just under two hours of deep sleep.
             ''')

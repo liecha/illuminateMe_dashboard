@@ -245,12 +245,36 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
 
 
 # Donut chart
-def make_donut(source):    
+def make_donut(source, input_color):
+    if input_color == 'blue':
+        chart_color = ['#29b5e8', '#155F7A']
+    if input_color == 'green':
+        chart_color = ['#27AE60', '#12783D']
+    if input_color == 'orange':
+        chart_color = ['#F39C12', '#875A12']
+    if input_color == 'red':
+        chart_color = ['#E74C3C', '#781F16']
     donut_chart =  alt.Chart(source).mark_arc(innerRadius=50).encode(
         theta="value",
         color="category:N",
-    )   
-    return donut_chart
+    )
+    input_text = 'input_text'
+    source_bg = pd.DataFrame({
+        "Topic": ['', input_text],
+        "% value": [100, 0]
+    })
+    input_response = 'p_sleep'
+    text = donut_chart.mark_text(align='center', color="#29b5e8", font="Lato", fontSize=32, fontWeight=700, fontStyle="italic").encode(text=alt.value(f'{input_response} %'))
+    plot_bg = alt.Chart(source_bg).mark_arc(innerRadius=45, cornerRadius=20).encode(
+        theta="% value",
+        color= alt.Color("Topic:N",
+                        scale=alt.Scale(
+                            # domain=['A', 'B'],
+                            domain=[input_text, ''],
+                            range=chart_color),  # 31333F
+                        legend=None),
+    ).properties(width=130, height=130)
+    return donut_chart, text, plot_bg
 
 def old_make_donut(input_response, input_text, input_color):
   if input_color == 'blue':
@@ -340,15 +364,21 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
-    #st.metric(label='Hours of sleep', value=df_sleep_date['total_hours'].values[0], delta='first_state_delta')
-    categories_sleep = ['deep', 'shallow', 'wake']
+    categories_sleep = ['deep sleep', 'shallow sleep', 'awake sleep']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({
         "category": categories_sleep,
         "value": values
     })
-    donut_sleep = make_donut(source)
+    donut_sleep = make_donut(source, 'blue')
     st.altair_chart(donut_sleep, use_container_width=True)
+    st.write('''
+        Sleep quality
+        Deep sleep typically happen during the first half of the night. 
+        You should aim for about 13-23% of your sleep to be in these stages. 
+        With 8 hours of sleep, you should aim for an hour to just under two 
+        hours of deep sleep
+        ''')
     
     st.markdown('#### Quality')
     st.dataframe(df_selected_year_sorted,

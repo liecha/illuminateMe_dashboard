@@ -179,18 +179,23 @@ def sleep_selection(df_sleep, selected_date):
 ### CALENDAR
 def calendar_prepp(df_remember):
     start_time = df_remember['start_date_time']
+    date_time_list = []
     date_list = []
     time_list = []
     for i in range(0, len(start_time)):
         this_day = start_time.iloc[i]
         sep = this_day[20:25]
         if sep == '00:00':
-            date_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+00:00'))
+            date_time_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+00:00'))
         if sep == '02:00':
-            date_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+02:00'))
-        time_list.append(str(date_list[i].time()))
-    df_remember['date_time'] = date_list
+            date_time_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+02:00'))
+        time_string = str(date_time_list[i].time())
+        time_list.append(time_string[0:5])
+        date_string = str(date_time_list[i].date())
+        date_list.append(date_string)
+    df_remember['date_time'] = date_time_list
     df_remember['time'] = time_list
+    df_remember['date'] = date_list
     return df_remember
 
 def calendar_selection(df_remember, selected_date):
@@ -420,12 +425,15 @@ with col[1]:
     
     st.markdown('#### Events') 
     st.dataframe(df_cal_remember,
-                 column_order=("start_date_time", "event"),
+                 column_order=("date", "time", "event"),
                  hide_index=True,
                  width=600,
                  column_config={
-                    "start_date_time": st.column_config.TextColumn(
-                        "Date and time",
+                    "date": st.column_config.TextColumn(
+                        "Date",
+                    ),
+                    "time": st.column_config.TextColumn(
+                        "Time",
                     ),
                     "event": st.column_config.TextColumn(
                         "Description",

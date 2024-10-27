@@ -1,7 +1,6 @@
 #######################
 # Import libraries
 import streamlit as st
-from streamlit_calendar import calendar
 import pandas as pd
 import altair as alt
 import plotly.express as px
@@ -74,9 +73,10 @@ st.markdown("""
 #######################
 # Load data
 df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
-df_results = pd.read_csv('data/results_20241024_all_points_training_7200min.csv')
-df_sports = pd.read_csv('data/SPORT_1729522447097.csv')
-df_sleep = pd.read_csv('data/SLEEP_1729522445075.csv')
+df_results = pd.read_csv('data/ai-model/results_20241024_all_points_training_7200min.csv')
+df_sports = pd.read_csv('data/wearable/SPORT_1729522447097.csv')
+df_sleep = pd.read_csv('data/wearable/SLEEP_1729522445075.csv')
+df_remember = pd.read_csv('data/calendar/remember_2024.csv')
 #######################
 # Selection functions
 
@@ -159,64 +159,31 @@ def sleep_selection(df_sleep, selected_date):
 
 
 ### CALENDAR
+def calendar_prepp(df_remember):
+    start_time = df_remember['start_date_time']
+    date_list = []
+    time_list = []
+    for i in range(0, len(start_time)):
+        this_day = start_time.iloc[i]
+        sep = this_day[20:25]
+        if sep == '00:00':
+            date_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+00:00'))
+        if sep == '02:00':
+            date_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+02:00'))
+        time_list.append(date_list[i].time())
+    df_remember['date_time'] = date_list
+    df_remember['time'] = time_list
+    return df_remember
 
-calendar_options = {
-    "editable": "true",
-    "selectable": "true",
-    "headerToolbar": {
-        "left": "today prev,next",
-        "center": "title",
-        "right": "resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth",
-    },
-    "slotMinTime": "06:00:00",
-    "slotMaxTime": "18:00:00",
-    "initialView": "resourceTimelineDay",
-    "resourceGroupField": "building",
-    "resources": [
-        {"id": "a", "building": "Building A", "title": "Building A"},
-        {"id": "b", "building": "Building A", "title": "Building B"},
-        {"id": "c", "building": "Building B", "title": "Building C"},
-        {"id": "d", "building": "Building B", "title": "Building D"},
-        {"id": "e", "building": "Building C", "title": "Building E"},
-        {"id": "f", "building": "Building C", "title": "Building F"},
-    ],
-}
-
-calendar_events = [
-    {
-        "title": "Event 1",
-        "start": "2023-07-31T08:30:00",
-        "end": "2023-07-31T10:30:00",
-        "resourceId": "a",
-    },
-    {
-        "title": "Event 2",
-        "start": "2023-07-31T07:30:00",
-        "end": "2023-07-31T10:30:00",
-        "resourceId": "b",
-    },
-    {
-        "title": "Event 3",
-        "start": "2023-07-31T10:40:00",
-        "end": "2023-07-31T12:30:00",
-        "resourceId": "a",
-    }
-]
-custom_css="""
-    .fc-event-past {
-        opacity: 0.8;
-    }
-    .fc-event-time {
-        font-style: italic;
-    }
-    .fc-event-title {
-        font-weight: 700;
-    }
-    .fc-toolbar-title {
-        font-size: 2rem;
-    }
-"""
-
+def calendar_selection(df_remember, selected_date):
+    calendar_selection = []
+    
+    # Select date
+    for i in range(0, len(df_remember)):
+        if str(df_remember['date_time'].iloc[i].date()) == selected_date:
+            calendar_selection.append(df_remember.iloc[i])
+    df_remember= pd.concat(calendar_selection, axis = 1).T.sort_values(by=['date_time'])   
+    return df_remember
 
 
 #######################
@@ -254,6 +221,11 @@ with st.sidebar:
     # SLEEP
     df_sleep_prepp = sleep_prepp(df_sleep)
     df_sleep_date, sleep_time = sleep_selection(df_sleep_prepp, selected_date)
+    
+    # CALENDAR
+    df_cal_rem_prepp = calendar_prepp(df_remember)
+    df_cal_remember = calendar_selection(df_cal_rem_prepp, selected_date)
+    print(df_cal_remember)
 
 
 #######################
@@ -356,8 +328,7 @@ def calculate_population_difference(input_df, input_year):
 col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:
-    st.subheader('Stress peaks')
-    
+    st.subheader('Stress peaks')    
     st.dataframe(df_date,
                  column_order=("date", "time", "score"),
                  hide_index=True,
@@ -407,8 +378,18 @@ with col[1]:
     st.altair_chart(barplot_sport, use_container_width=True)
     
     st.markdown('#### Events') 
-    calendar = calendar(events=calendar_events, options=calendar_options, custom_css=custom_css)
-    #st.write(calendar)
+    st.dataframe(df_cal_remember,
+                 column_order=("time", "event"),
+                 hide_index=True,
+                 width=None,
+                 column_config={
+                    "time": st.column_config.TextColumn(
+                        "Time",
+                    ),
+                    "event": st.column_config.TextColumn(
+                        "Event",
+                    )}
+                 )
                
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)

@@ -381,7 +381,7 @@ def calculate_population_difference(input_df, input_year):
 
 #######################
 # Dashboard Main Panel
-st.caption("_Logged in as:_")
+st.caption("_Logged in as_")
 st.subheader('Emelie Chandni Jutvik')
 col = st.columns((3.0, 5.5), gap='medium')
 with col[0]:

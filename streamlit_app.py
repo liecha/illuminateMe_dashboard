@@ -367,7 +367,7 @@ col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:
     st.subheader('Stress peaks')    
-    st.caption("The selected day is a " + sleep_time[0] + "]_ at selected date")
+    st.caption("The selected day is a" + selected_weekday + "]_")
     st.dataframe(df_date,
                  column_order=("date", "time", "score"),
                  hide_index=True,
@@ -391,7 +391,7 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
-    st.caption("You where sleeping for _:blue[" + selected_weekday + "]_")
+    st.caption("You where sleeping for _:blue[" + sleep_time[0] + "]_ at selected date")
     categories_sleep = ['deep sleep', 'shallow sleep', 'awake']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({

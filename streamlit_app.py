@@ -217,6 +217,8 @@ custom_css="""
     }
 """
 
+calendar = calendar(events=calendar_events, options=calendar_options, custom_css=custom_css)
+
 #######################
 # Sidebar
 with st.sidebar:
@@ -404,8 +406,7 @@ with col[1]:
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
     
-    st.markdown('#### Events') 
-    calendar = calendar(events=calendar_events, options=calendar_options, custom_css=custom_css)
+    st.markdown('#### Events')   
     st.write(calendar)
                
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')

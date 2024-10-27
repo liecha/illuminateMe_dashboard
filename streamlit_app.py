@@ -108,6 +108,7 @@ def weekday_summary_peaks(df_results):
 def weekday_mean_score(df_results, weekday_digit):
     result_weekday = df_results[df_results['weekday'] == weekday_digit]
     stress_score = result_weekday[['time', 'heartRate', 'prediction', 'score']].groupby(['time']).sum()
+    stress_score['time_string'] = stress_score.index
     return stress_score
 
 ### SPORT
@@ -248,7 +249,6 @@ with st.sidebar:
     selected_score = st.selectbox('Select score', stress_scores)
     df_score = df_results[df_results.score >= selected_score]
     df_period_peak_summary = weekday_summary_peaks(df_results)
-    print(df_period_peak_summary)
 
        
     # DATE SELECTION
@@ -428,8 +428,8 @@ with col[0]:
             aim to get between an hour or just under two hours of deep sleep.
             ''')
     
-    st.markdown('#### Stress summary period')  
-    st.caption("All _:blue[stress scores]_ detected for the period")
+    st.markdown('#### Period summary')  
+    st.caption("Detected _:blue[stress peaks]_ for this period")
     summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'dates_string', 'score')
     st.altair_chart(summary_peaks_score_plot, use_container_width=True)
     
@@ -463,3 +463,9 @@ with col[1]:
     st.caption("All _:blue[stress scores]_ at selected day")
     lineplot_score = make_lineplot(df_date_score, 'score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)
+    
+    st.markdown('#### Weekday summary') 
+    st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
+    st.caption("Summary of _:blue[stress scores]_ for _:blue[" + selected_weekday + "]_")
+    lineplot_weekday_avg = make_lineplot(df_weekday_average, 'score', 'time_string')
+    st.altair_chart(lineplot_weekday_avg, use_container_width=True)

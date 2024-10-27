@@ -80,6 +80,25 @@ df_remember = pd.read_csv('data/calendar/remember_2024.csv')
 #######################
 # Selection functions
 
+### GENERAL
+def weekday_text(day_digit):
+    day = ''
+    if day_digit == 0:
+        day = 'Monday'
+    if day_digit == 1:
+        day = 'Tuesday'
+    if day_digit == 2:
+        day = 'Wednesday'
+    if day_digit == 3:
+        day = 'Thursday'
+    if day_digit == 4:
+        day = 'Friday'
+    if day_digit == 5:
+        day = 'Saturday'
+    if day_digit == 6:
+        day = 'Sunday'
+    return day     
+
 ### SPORT
 def sports_prepp(df_sports):
     df_sports['date_time'] = pd.to_datetime(df_sports['startTime'], format="%Y-%m-%d %H:%M:%S+0000")
@@ -210,6 +229,7 @@ with st.sidebar:
     # 8: diff == 30-40
     # 10: diff == 40-   
     stress_scores = [10, 8, 6, 4, 2, 1]
+    all_weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     selected_score = st.selectbox('Select score', stress_scores)
     df_score = df_results[df_results.score >= selected_score]
 
@@ -222,6 +242,8 @@ with st.sidebar:
     selected_date = st.selectbox('Select a date', date_list)
     df_date = df_score[df_score.date == selected_date]
     df_date_score = df_results[df_results.date == selected_date]
+    weekday_digit = df_date_score['weekday'].iloc[0]
+    selected_weekday = weekday_text(weekday_digit)
 
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)
@@ -345,6 +367,7 @@ col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:
     st.subheader('Stress peaks')    
+    st.caption("The selected day is a " + sleep_time[0] + "]_ at selected date")
     st.dataframe(df_date,
                  column_order=("date", "time", "score"),
                  hide_index=True,
@@ -368,7 +391,7 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
-    st.caption("You where sleeping for _:blue[" + sleep_time[0] + "]_ at selected date")
+    st.caption("You where sleeping for _:blue[" + selected_weekday + "]_")
     categories_sleep = ['deep sleep', 'shallow sleep', 'awake']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({
@@ -388,8 +411,7 @@ with col[0]:
     
 
 with col[1]:
-    st.subheader('Indicators')
-            
+    st.subheader('Indicators')            
     st.markdown('#### Activity')  
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
@@ -409,6 +431,6 @@ with col[1]:
                  )
     
     st.markdown('#### Dayly overview') 
-    st.caption("_[Stress score]_")
+    st.caption("_Stress score_")
     lineplot_score = make_lineplot(df_date_score, 'score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)

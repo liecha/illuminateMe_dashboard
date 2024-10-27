@@ -80,7 +80,6 @@ df_remember = pd.read_csv('data/calendar/remember_2024.csv')
 #######################
 # Selection functions
 
-
 ### SPORT
 def sports_prepp(df_sports):
     df_sports['date_time'] = pd.to_datetime(df_sports['startTime'], format="%Y-%m-%d %H:%M:%S+0000")
@@ -200,6 +199,8 @@ with st.sidebar:
     st.image("illuminateMe_logo.png")
     #t.markdown('Emelie Chandni Jutvik')    
     
+    # SCORE OVERVIEW
+    
     # SCORE SELECTION
     # Stress scale:
     # 1: diff == 0-5
@@ -216,11 +217,11 @@ with st.sidebar:
     # DATE SELECTION
     date_list_score = df_score.groupby(['date']).count()
     date_list = date_list_score.index
- 
-    
+  
     # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
     df_date = df_score[df_score.date == selected_date]
+    df_date_score = df_results[df_results.date == selected_date]
 
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)
@@ -233,11 +234,18 @@ with st.sidebar:
     # CALENDAR
     df_cal_rem_prepp = calendar_prepp(df_remember)
     df_cal_remember = calendar_selection(df_cal_rem_prepp, selected_date)
-    print(df_cal_remember)
 
 
 #######################
 # Plots
+
+# Line plit
+def make_lineplot(input_df, input_y, input_x):   
+    line_plot = alt.Chart(input_df).mark_line().encode(
+        x=input_x, # time
+        y=input_y # score
+    )
+    return line_plot
 
 # Barplot
 def make_barplot(input_df, input_y, input_x):    
@@ -381,6 +389,11 @@ with col[0]:
 
 with col[1]:
     st.subheader('Indicators')
+    
+    st.markdown('#### Overview: Stress score') 
+    lineplot_score = make_lineplot(df_date_score, 'score', 'time')
+    st.altair_chart(lineplot_score, use_container_width=True)
+        
     st.markdown('#### Activity')  
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)

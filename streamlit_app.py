@@ -379,15 +379,15 @@ with col[1]:
     
     st.markdown('#### Events') 
     st.dataframe(df_cal_remember,
-                 column_order=("event", "time"),
+                 column_order=("time", "event"),
                  hide_index=True,
-                 width=300,
+                 width=500,
                  column_config={
-                    "event": st.column_config.TextColumn(
-                        "Description",
-                    ),
                     "time": st.column_config.TextColumn(
                         "Time",
+                    ),
+                    "event": st.column_config.TextColumn(
+                        "Description",
                     )}
                  )
                

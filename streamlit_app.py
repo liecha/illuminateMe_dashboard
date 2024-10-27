@@ -366,7 +366,8 @@ def calculate_population_difference(input_df, input_year):
 col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:
-    st.subheader('Stress peaks')    
+    #st.subheader('Stress peaks')
+    st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
     st.dataframe(df_date,
                  column_order=("date", "time", "score"),
@@ -411,7 +412,7 @@ with col[0]:
     
 
 with col[1]:
-    st.subheader('Indicators')            
+    #st.subheader('Indicators')            
     st.markdown('#### Activity')  
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)

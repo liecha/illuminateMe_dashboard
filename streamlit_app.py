@@ -431,7 +431,7 @@ with col[0]:
     
     st.markdown('#### Stress summary period')  
     st.caption("All _:blue[stress scores]_ detected for the period")
-    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date', 'score')
+    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'prediction', 'score')
     st.altair_chart(summary_peaks_score_plot, use_container_width=True)
     
 

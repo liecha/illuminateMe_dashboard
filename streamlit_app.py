@@ -183,6 +183,13 @@ def calendar_selection(df_remember, selected_date):
         if str(df_remember['date_time'].iloc[i].date()) == selected_date:
             calendar_selection.append(df_remember.iloc[i])
     df_remember= pd.concat(calendar_selection, axis = 1).T.sort_values(by=['date_time'])   
+    
+    if len(df_remember) < 1:
+        data = {
+            'time': ['-'],
+            'event': ['No events registered at this date']
+            }
+        df_remember = pd.DataFrame(data)
     return df_remember
 
 

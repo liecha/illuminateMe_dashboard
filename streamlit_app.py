@@ -102,6 +102,7 @@ def weekday_text(day_digit):
 def weekday_summary_peaks(df_results):
     result_score_10 = df_results[df_results['score'] >= 10]
     date_list_score = result_score_10.groupby(['date']).count()
+    date_list_score['date'] = date_list_score.index
     return date_list_score
 
 def weekday_mean_score(df_results, weekday_digit):
@@ -248,6 +249,7 @@ with st.sidebar:
     df_score = df_results[df_results.score >= selected_score]
     df_period_peak_summary = weekday_summary_peaks(df_results)
     print(df_period_peak_summary)
+    print(df_period_peak_summary.index)
 
        
     # DATE SELECTION
@@ -429,7 +431,7 @@ with col[0]:
     
     st.markdown('#### Stress summary period')  
     st.caption("All _:blue[stress scores]_ detected for the period")
-    summary_peaks_score_plot = make_barplot(df_period_peak_summary, df_period_peak_summary.index, 'score')
+    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date', 'score')
     st.altair_chart(summary_peaks_score_plot, use_container_width=True)
     
 

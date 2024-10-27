@@ -418,11 +418,7 @@ with col[0]:
     
 
 with col[1]:
-    #st.subheader('Indicators')            
-    st.markdown('#### Activity')  
-    barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
-    st.altair_chart(barplot_sport, use_container_width=True)
-    
+    #st.subheader('Indicators')             
     st.markdown('#### Events') 
     st.dataframe(df_cal_remember,
                  column_order=("date", "time", "event"),
@@ -439,6 +435,10 @@ with col[1]:
                         "Description",
                     )}
                  )
+    
+    st.markdown('#### Activity')  
+    barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
+    st.altair_chart(barplot_sport, use_container_width=True)
     
     st.markdown('#### Dayly overview') 
     st.caption("Stress score")

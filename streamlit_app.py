@@ -398,7 +398,7 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
-    st.caption("You where sleeping for _:blue[" + sleep_time[0][0:5] + "]_ at selected date")
+    st.caption("You where sleeping for _:blue[" + sleep_time[0][0:4] + "]_ at selected date")
     categories_sleep = ['deep sleep', 'shallow sleep', 'awake']
     values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
     source = pd.DataFrame({

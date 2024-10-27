@@ -422,7 +422,7 @@ with col[1]:
     st.dataframe(df_cal_remember,
                  column_order=("start_date_time", "event"),
                  hide_index=True,
-                 width=500,
+                 width=600,
                  column_config={
                     "start_date_time": st.column_config.TextColumn(
                         "Date and time",

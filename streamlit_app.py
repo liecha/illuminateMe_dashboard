@@ -184,7 +184,7 @@ def calendar_selection(df_remember, selected_date):
             calendar_selection.append(df_remember.iloc[i])
     df_remember= pd.concat(calendar_selection, axis = 1).T.sort_values(by=['date_time'])   
     
-    if len(df_remember) < 1:
+    if len(df_remember) == 0:
         data = {
             'time': ['-'],
             'event': ['No events registered at this date']
@@ -386,12 +386,12 @@ with col[1]:
     
     st.markdown('#### Events') 
     st.dataframe(df_cal_remember,
-                 column_order=("time", "event"),
+                 column_order=("date_time", "event"),
                  hide_index=True,
                  width=500,
                  column_config={
-                    "time": st.column_config.TextColumn(
-                        "Time",
+                    "date_time": st.column_config.TextColumn(
+                        "Date and time",
                     ),
                     "event": st.column_config.TextColumn(
                         "Description",

@@ -170,7 +170,7 @@ def calendar_prepp(df_remember):
             date_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+00:00'))
         if sep == '02:00':
             date_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+02:00'))
-        time_list.append(date_list[i].time())
+        time_list.append(str(date_list[i].time()))
     df_remember['date_time'] = date_list
     df_remember['time'] = time_list
     return df_remember

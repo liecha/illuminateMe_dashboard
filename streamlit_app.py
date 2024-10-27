@@ -369,7 +369,7 @@ def calculate_population_difference(input_df, input_year):
 
 #######################
 # Dashboard Main Panel
-st.subheader('Your ovreview')
+st.subheader('Your overview')
 col = st.columns((3.0, 5.5), gap='medium')
 with col[0]:
     #st.subheader('Your ovreview')
@@ -442,7 +442,7 @@ with col[1]:
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
     
-    st.markdown('#### Dayly overview') 
+    st.markdown('#### Day overview') 
     st.caption("All _:blue[stress scores]_ at selected day")
     lineplot_score = make_lineplot(df_date_score, 'score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)

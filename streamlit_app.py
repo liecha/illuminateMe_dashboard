@@ -256,6 +256,7 @@ with st.sidebar:
     # CALENDAR
     df_cal_rem_prepp = calendar_prepp(df_remember)
     df_cal_remember = calendar_selection(df_cal_rem_prepp, selected_date)
+    print(df_cal_remember)
 
 
 #######################
@@ -419,11 +420,11 @@ with col[1]:
     
     st.markdown('#### Events') 
     st.dataframe(df_cal_remember,
-                 column_order=("date_time", "event"),
+                 column_order=("start_date_time", "event"),
                  hide_index=True,
                  width=500,
                  column_config={
-                    "date_time": st.column_config.TextColumn(
+                    "start_date_time": st.column_config.TextColumn(
                         "Date and time",
                     ),
                     "event": st.column_config.TextColumn(
@@ -432,6 +433,6 @@ with col[1]:
                  )
     
     st.markdown('#### Dayly overview') 
-    st.caption("_Stress score_")
+    st.caption("Stress score")
     lineplot_score = make_lineplot(df_date_score, 'score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)

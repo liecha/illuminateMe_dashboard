@@ -370,9 +370,9 @@ def calculate_population_difference(input_df, input_year):
 #######################
 # Dashboard Main Panel
 col = st.columns((3.0, 5.5), gap='medium')
-
+st.subheader('Your ovreview')
 with col[0]:
-    st.subheader('Your ovreview')
+    #st.subheader('Your ovreview')
     st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
     st.dataframe(df_date,

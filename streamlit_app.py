@@ -1,6 +1,7 @@
 #######################
 # Import libraries
 import streamlit as st
+from streamlit_calendar import calendar
 import pandas as pd
 import altair as alt
 import plotly.express as px
@@ -343,8 +344,6 @@ with col[1]:
     barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
     st.altair_chart(barplot_sport, use_container_width=True)
     
-    from streamlit_calendar import calendar
-
     calendar_options = {
         "editable": "true",
         "selectable": "true",

@@ -420,6 +420,7 @@ with col[0]:
 with col[1]:
     #st.subheader('Indicators')             
     st.markdown('#### Events') 
+    st.caption("_:blue[Calendar notes]_ from selected day")
     st.dataframe(df_cal_remember,
                  column_order=("date", "time", "event"),
                  hide_index=True,
@@ -441,6 +442,6 @@ with col[1]:
     st.altair_chart(barplot_sport, use_container_width=True)
     
     st.markdown('#### Dayly overview') 
-    st.caption("Stress score")
+    st.caption("All _:blue[stress scores]_ at selected day")
     lineplot_score = make_lineplot(df_date_score, 'score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)

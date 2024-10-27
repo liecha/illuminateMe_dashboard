@@ -184,7 +184,7 @@ def calendar_selection(df_remember, selected_date):
             calendar_selection.append(df_remember.iloc[i])
     if len(calendar_selection) == 0:
         data = {
-            'time': ['-'],
+            'date_time': ['-'],
             'event': ['No events registered at this date']
             }
         df_remember = pd.DataFrame(data)
@@ -232,7 +232,7 @@ with st.sidebar:
     
     # CALENDAR
     df_cal_rem_prepp = calendar_prepp(df_remember)
-    df_cal_remember = calendar_selection(df_cal_rem_prepp, '2024-10-20')
+    df_cal_remember = calendar_selection(df_cal_rem_prepp, selected_date)
     print(df_cal_remember)
 
 

@@ -97,7 +97,17 @@ def weekday_text(day_digit):
         day = 'Saturday'
     if day_digit == 6:
         day = 'Sunday'
-    return day     
+    return day  
+
+def weekday_summary_peaks(df_results):
+    result_score_10 = df_results[df_results['score'] >= 10]
+    date_list_score = result_score_10.groupby(['date']).count()
+    return date_list_score
+
+def weekday_mean_score(df_results, weekday_digit):
+    result_weekday = df_results[df_results['weekday'] == weekday_digit]
+    stress_score = result_weekday[['time', 'heartRate', 'prediction', 'score']].groupby(['time']).sum()
+    return stress_score
 
 ### SPORT
 def sports_prepp(df_sports):
@@ -220,8 +230,7 @@ def calendar_selection(df_remember, selected_date):
 #######################
 # Sidebar
 with st.sidebar:
-    st.image("illuminateMe_logo.png")
-    #t.markdown('Emelie Chandni Jutvik')    
+    st.image("illuminateMe_logo.png")  
     
     # SCORE OVERVIEW
     
@@ -237,6 +246,7 @@ with st.sidebar:
     all_weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     selected_score = st.selectbox('Select score', stress_scores)
     df_score = df_results[df_results.score >= selected_score]
+    df_period_peak_summary = weekday_summary_peaks(df_results)
 
        
     # DATE SELECTION
@@ -249,6 +259,7 @@ with st.sidebar:
     df_date_score = df_results[df_results.date == selected_date]
     weekday_digit = df_date_score['weekday'].iloc[0]
     selected_weekday = weekday_text(weekday_digit)
+    df_weekday_average = weekday_mean_score(df_results, weekday_digit)
 
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)
@@ -369,10 +380,10 @@ def calculate_population_difference(input_df, input_year):
 
 #######################
 # Dashboard Main Panel
+st.caption("_Logged in as:_")
 st.subheader('Emelie Chandni Jutvik')
 col = st.columns((3.0, 5.5), gap='medium')
 with col[0]:
-    #st.subheader('Your ovreview')
     st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
     st.dataframe(df_date,
@@ -415,6 +426,11 @@ with col[0]:
             to be in this stages. This means - if you sleep 8 hours, you should 
             aim to get between an hour or just under two hours of deep sleep.
             ''')
+    
+    st.markdown('#### Stress summary period')  
+    st.caption("All _:blue[stress scores]_ detected for the period")
+    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date', 'score')
+    st.altair_chart(summary_peaks_score_plot, use_container_width=True)
     
 
 with col[1]:

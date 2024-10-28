@@ -124,9 +124,11 @@ with st.sidebar:
   
     # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
-    df_date = df_score[df_score.date == selected_date]
-    df_date_score = df_results[df_results.date == selected_date]
-    selected_weekday = df_date_score['weekday_text'].iloc[0]
+    df_date_score = df_score[df_score.date == selected_date]
+    print(df_date_score)
+    df_date = df_results[df_results.date == selected_date]
+    print(df_date)
+    selected_weekday = df_date['weekday_text'].iloc[0]
 
     # SPORT
     df_sports_date = df_sports[df_sports['Date'] == selected_date]
@@ -172,7 +174,7 @@ col = st.columns((3.0, 5.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
-    st.dataframe(df_date,
+    st.dataframe(df_date_score,
                  column_order=("date", "time", "Stress score"),
                  hide_index=True,
                  width=None,
@@ -187,7 +189,7 @@ with col[0]:
                         "Score",
                         format="%f",
                         min_value=0,
-                        max_value=max(df_date['Stress score']),
+                        max_value=max(df_date_score['Stress score']),
                      )}
                  )
     
@@ -242,7 +244,7 @@ with col[1]:
     
     st.markdown('#### Day overview') 
     st.caption("All _:blue[stress scores]_ at selected day")
-    lineplot_score = make_lineplot(df_date_score, 'Stress score', 'time')
+    lineplot_score = make_lineplot(df_date, 'Stress score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)
     
     st.markdown('#### Diary') 

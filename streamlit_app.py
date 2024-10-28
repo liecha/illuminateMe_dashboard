@@ -102,8 +102,9 @@ def note_selection(df_notes, selected_date):
     df_notes_date = df_notes[df_notes['date'] == selected_date]    
     if len(df_notes_date) == 0:
         data = {
-            'date_time': ['-'],
-            'event': ['No events registered at this date']
+            'date': ['-'],
+            'time': ['-'],
+            'note': ['No events registered at this date']
             }
         df_notes_date = pd.DataFrame(data)      
     return df_notes_date

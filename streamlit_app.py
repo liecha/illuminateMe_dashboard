@@ -72,8 +72,7 @@ st.markdown("""
 
 #######################
 # Load data
-df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
-df_results = pd.read_csv('data/ai-model/results_two_weeks_20241027.csv')
+df_results = pd.read_csv('data/ai-model/ai-model-results.csv')
 df_sports = pd.read_csv('data/wearable/SPORT_1729522447097.csv')
 df_sleep = pd.read_csv('data/wearable/SLEEP_1729522445075.csv')
 df_remember = pd.read_csv('data/calendar/remember_2024.csv')
@@ -81,35 +80,11 @@ df_remember = pd.read_csv('data/calendar/remember_2024.csv')
 # Selection functions
 
 ### GENERAL
-def weekday_text(day_digit):
-    day = ''
-    if day_digit == 0:
-        day = 'Monday'
-    if day_digit == 1:
-        day = 'Tuesday'
-    if day_digit == 2:
-        day = 'Wednesday'
-    if day_digit == 3:
-        day = 'Thursday'
-    if day_digit == 4:
-        day = 'Friday'
-    if day_digit == 5:
-        day = 'Saturday'
-    if day_digit == 6:
-        day = 'Sunday'
-    return day  
-
 def weekday_summary_peaks(df_results):
     result_score_10 = df_results[df_results['score'] >= 8]
     date_list_score = result_score_10.groupby(['date']).count()   
-    date_list_score['dates_string'] = date_list_score.index
+    date_list_score.insert(0, 'dates_string', date_list_score.index)
     return date_list_score
-
-def weekday_mean_score(df_results, weekday_digit):
-    result_weekday = df_results[df_results['weekday'] == weekday_digit]
-    stress_score = result_weekday[['time', 'heartRate', 'prediction', 'score']].groupby(['time']).sum()
-    stress_score['time_string'] = stress_score.index
-    return stress_score
 
 ### SPORT
 def sports_prepp(df_sports):
@@ -259,9 +234,8 @@ with st.sidebar:
     selected_date = st.selectbox('Select a date', date_list)
     df_date = df_score[df_score.date == selected_date]
     df_date_score = df_results[df_results.date == selected_date]
-    weekday_digit = df_date_score['weekday'].iloc[0]
-    selected_weekday = weekday_text(weekday_digit)
-    df_weekday_average = weekday_mean_score(df_results, weekday_digit)
+    selected_weekday = df_date_score['weekday_text'].iloc[0]
+    print(selected_weekday)
 
     # SPORT
     df_sports_prepp = sports_prepp(df_sports)

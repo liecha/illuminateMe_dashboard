@@ -285,7 +285,7 @@ with col[1]:
         input_test = placeholder.text_input('text')
         button_check = st.form_submit_button("Save")
         #click_clear = st.form_submit_button('clear text input', key=1)
-        if click_clear:
+        if button_check:
             input_test = placeholder.text_input('text', value='', key=1)
         '''    
         note = st.text_input("Make a note", "I think this peak refers to...") 

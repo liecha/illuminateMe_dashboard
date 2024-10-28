@@ -117,11 +117,12 @@ def save_notes():
         }
     df_note = pd.DataFrame(data) '
     '''   
-    df_note = {
+    note = {
         'date': ['date_peak_string'],
         'time': ['time_peak_string'],
         'note': ['note']
         }
+    df_note = pd.DataFrame(note) 
     df_note.to_csv('data/notes/note-results.csv', index=False)
 
 #######################

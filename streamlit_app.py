@@ -96,10 +96,6 @@ def calendar_selection(df_calendar, selected_date):
             }
         df_calendar_date = pd.DataFrame(data)      
     return df_calendar_date
-
-### COMMUNICATION WITH FRONTEND
-def my_callback(coming_from_app):
-    st.text(str(text_to_display))
     
 #######################
 # Sidebar
@@ -253,6 +249,11 @@ with col[1]:
     st.markdown('#### Diary') 
     st.caption("Make _:blue[notes]_ refering to detected stress peaks")
     st.session_state["user_input"] = st.text_input(label="enter text")
+
+    def my_callback(text_to_display):
+        st.text(str(text_to_display))
+
+
     st.button("display text", on_click=my_callback, args=(st.session_state["user_input"],))
     
     

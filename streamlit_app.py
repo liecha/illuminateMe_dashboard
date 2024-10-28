@@ -73,95 +73,17 @@ st.markdown("""
 #######################
 # Load data
 df_results = pd.read_csv('data/ai-model/ai-model-results.csv')
-df_sports = pd.read_csv('data/wearable/SPORT_1729522447097.csv')
-df_sleep = pd.read_csv('data/wearable/SLEEP_1729522445075.csv')
+df_sports = pd.read_csv('data/wearable/sports-results.csv')
+df_sleep = pd.read_csv('data/wearable/sleep-results.csv')
 df_remember = pd.read_csv('data/calendar/remember_2024.csv')
 #######################
 # Selection functions
 
 ### GENERAL
 def weekday_summary_peaks(df_results):
-    result_score_10 = df_results[df_results['score'] >= 8]
+    result_score_10 = df_results[df_results['Stress score'] >= 8]
     date_list_score = result_score_10.groupby(['date']).count()   
-    date_list_score.insert(0, 'dates_string', date_list_score.index)
     return date_list_score
-
-### SPORT
-def sports_prepp(df_sports):
-    df_sports['date_time'] = pd.to_datetime(df_sports['startTime'], format="%Y-%m-%d %H:%M:%S+0000")
-    df_sports['date'] = pd.to_datetime(df_sports['date_time'], format="%Y-%m-%d")
-    
-    # 1 RUN
-    # 6 WALK
-    # 8 INDOOR RUNNING
-    # 10 CYKEL
-    # 14 SWIM
-    # 16 ?? FRI RÖRELSE ??
-    # 50 CORE
-    # 52 STYRKETRÄNING
-    # 60 ?? FRI RÖRELSE ??
-    
-    dict_sports = {
-        1:  "- Running        ", 
-        6:  "- Walking        ", 
-        8:  "- Indoor running", 
-        10: "- Cycling       ", 
-        14: "- Swimming      ", 
-        16: "- Free movement ", 
-        50: "- Core          ", 
-        52: "- Strength      ",
-        60: "- Unknown       "
-    }
-    
-    df_sports['type_text'] = df_sports['type'].map(dict_sports)
-    return df_sports
-
-def sport_selection(df_sports_prepp, selected_date):
-    sport_selection = []
-    
-    # Select date
-    for i in range(0, len(df_sports_prepp)):
-        if str(df_sports_prepp['date'].iloc[i].date()) == selected_date:
-            sport_selection.append(df_sports_prepp.iloc[i])
-    df_sport_date= pd.concat(sport_selection, axis = 1).T.sort_values(by=['date_time'])
-    
-    # Select time
-    time_sport = []    
-    for i in range(0, len(df_sport_date)):
-        time_sport.append(df_sport_date['date'].iloc[i].strftime("%H:%M"))
-    df_sport_date['time'] = time_sport
-    
-    # Select label
-    bar_labels = [] 
-    types = df_sport_date['type_text'].values
-    for i in range(0, len(time_sport)):
-        bar_labels.append(time_sport[i] + ' ' + types[i])
-    df_sport_date['labels'] = bar_labels
-    
-    return df_sport_date
-
-
-### SLEEP
-def define_hours(x):
-    import datetime
-    return str(datetime.timedelta(minutes=x)) + ' hours'
-
-
-def sleep_prepp(df_sleep):
-    column_names = ['deepSleepTime', 'shallowSleepTime', 'wakeTime']
-    df_sleep['total_sleep']= df_sleep[column_names].sum(axis=1)      
-    df_sleep['total_hours'] = df_sleep['total_sleep'].apply(define_hours)
-    return df_sleep
-
-
-def sleep_selection(df_sleep, selected_date):
-    df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
-    sleep_time = df_sleep_date['total_hours'].values
-    df_sleep_date = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime', 'total_sleep']]
-    total_sleep = df_sleep_date['total_sleep'].values[0]
-    df_sleep_date = df_sleep_date.div(total_sleep).round(4) * 100
-    return df_sleep_date, sleep_time
-
 
 ### CALENDAR
 def calendar_prepp(df_remember):
@@ -222,7 +144,7 @@ with st.sidebar:
     stress_scores = [10, 8, 6, 4, 2, 1]
     all_weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     selected_score = st.selectbox('Select score', stress_scores)
-    df_score = df_results[df_results.score >= selected_score]
+    df_score = df_results[df_results['Stress score'] >= selected_score]
     df_period_peak_summary = weekday_summary_peaks(df_results)
 
        
@@ -235,15 +157,12 @@ with st.sidebar:
     df_date = df_score[df_score.date == selected_date]
     df_date_score = df_results[df_results.date == selected_date]
     selected_weekday = df_date_score['weekday_text'].iloc[0]
-    print(selected_weekday)
 
     # SPORT
-    df_sports_prepp = sports_prepp(df_sports)
-    df_sport_date = sport_selection(df_sports_prepp, selected_date)
+    df_sports_date = df_sports[df_sports['Date'] == selected_date]
 
     # SLEEP
-    df_sleep_prepp = sleep_prepp(df_sleep)
-    df_sleep_date, sleep_time = sleep_selection(df_sleep_prepp, selected_date)
+    df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
     
     # CALENDAR
     df_cal_rem_prepp = calendar_prepp(df_remember)
@@ -384,9 +303,9 @@ with col[0]:
                  )
     
     st.markdown('#### Sleep')
-    st.caption("You where sleeping for _:blue[" + sleep_time[0][0:1] +" hours and " + sleep_time[0][2:4] + " minutes]_  at selected date")
+    st.caption("You where sleeping for _:blue[" + df_sleep_date['totalSleep_hours'].values[0] + "]_  at selected date")
     categories_sleep = ['deep sleep', 'shallow sleep', 'awake']
-    values = df_sleep_date[['deepSleepTime', 'shallowSleepTime', 'wakeTime']].values[0]
+    values = df_sleep_date[['DeepSleep %', 'ShallowSleep %', 'Awake %']].values[0]
     source = pd.DataFrame({
         "category": categories_sleep,
         "value": values
@@ -430,7 +349,7 @@ with col[1]:
     
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")
-    barplot_sport = make_barplot(df_sport_date, 'labels', 'sportTime(s)')
+    barplot_sport = make_barplot(df_sports_date, 'Time / Activity', 'Activity time (h:m:s)') #'sportTime(s)'
     st.altair_chart(barplot_sport, use_container_width=True)
     
     st.markdown('#### Day overview') 

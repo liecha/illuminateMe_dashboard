@@ -285,7 +285,7 @@ with col[1]:
         button_check = st.form_submit_button("Save")
         if button_check:
             input_test = placeholder.text_input('Make your note', value='', key=1)
-            st.write("Y_our note was saved_") 
+            st.write("_Your note was saved_") 
             
     #st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     #st.write("The current movie title is", note)

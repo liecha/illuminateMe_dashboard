@@ -298,7 +298,7 @@ with col[0]:
                         "Score",
                         format="%f",
                         min_value=0,
-                        max_value=max(df_date.score),
+                        max_value=max(df_date['Stress score']),
                      )}
                  )
     

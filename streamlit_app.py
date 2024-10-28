@@ -172,7 +172,7 @@ col = st.columns((3.0, 5.5), gap='medium')
 with col[0]:
     st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
-    st.dataframe(df_date_score,
+    st.dataframe(df_date,
                  column_order=("date", "time", "Stress score"),
                  hide_index=True,
                  width=None,
@@ -187,7 +187,7 @@ with col[0]:
                         "Score",
                         format="%f",
                         min_value=0,
-                        max_value=max(df_date_score['Stress score']),
+                        max_value=max(df_date['Stress score']),
                      )}
                  )
     

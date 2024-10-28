@@ -205,7 +205,7 @@ with col[0]:
     st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
     st.dataframe(df_date,
-                 column_order=("date", "time", "weekday_text", "Stress score"),
+                 column_order=("date", "time", "Stress score"),
                  hide_index=True,
                  width=None,
                  column_config={
@@ -214,9 +214,6 @@ with col[0]:
                     ),
                     "time": st.column_config.TextColumn(
                         "Time",
-                    ),
-                    "weekday_text": st.column_config.TextColumn(
-                        "Weekday",
                     ),
                     "score": st.column_config.ProgressColumn(
                         "Score",

@@ -124,7 +124,7 @@ with st.sidebar:
   
     # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
-    df_date = df_score[df_score.date == selected_date]
+    #df_date = df_score[df_score.date == selected_date]
     df_date_score = df_results[df_results.date == selected_date]
     selected_weekday = df_date_score['weekday_text'].iloc[0]
 
@@ -134,11 +134,8 @@ with st.sidebar:
     # SLEEP
     df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
     
-    # CALENDAR
-    
+    # CALENDAR   
     df_calendar_date = calendar_selection(df_calendar, selected_date)
-    print(df_calendar_date)
-
 
 #######################
 # Plots
@@ -249,8 +246,8 @@ with col[1]:
     st.altair_chart(lineplot_score, use_container_width=True)
     
     st.markdown('#### Diary') 
-    st.caption("Make _:blue[notes]_ refering to detected stress peaks")
-    title = st.text_input("Movie title", "Life of Brian")
+    st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
+    title = st.text_input("New note", "At this day I was...")
     st.write("The current movie title is", title)
     
     

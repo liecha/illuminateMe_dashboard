@@ -283,7 +283,8 @@ with col[1]:
         selected_peak = st.selectbox('Select a peak', list_of_peaks)
         placeholder = st.empty()
         input_test = placeholder.text_input('text')
-        click_clear = st.form_submit_button('clear text input', key=1)
+        button_check = st.form_submit_button("Save")
+        #click_clear = st.form_submit_button('clear text input', key=1)
         if click_clear:
             input_test = placeholder.text_input('text', value='', key=1)
         '''    

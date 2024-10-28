@@ -281,7 +281,7 @@ with col[0]:
     st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
     st.dataframe(df_date,
-                 column_order=("date", "time", "weekday_text", "Stress score"),
+                 column_order=("date", "time", "Weekday", "Stress score"),
                  hide_index=True,
                  width=None,
                  column_config={

@@ -97,6 +97,15 @@ def calendar_selection(df_calendar, selected_date):
         df_calendar_date = pd.DataFrame(data)      
     return df_calendar_date
 
+def calendar_popdown(df_date_score):
+    list_of_peaks = []
+    for i in range(0, len(df_date_score)):
+        date_string = df_date_score.iloc[i]['date']
+        time_string = df_date_score.iloc[i]['time']
+        result_string = date_string + ' at ' + time_string
+        list_of_peaks.append(result_string)
+    return list_of_peaks
+
 #######################
 # Sidebar
 with st.sidebar:
@@ -125,9 +134,9 @@ with st.sidebar:
     # SELECTED DATES
     selected_date = st.selectbox('Select a date', date_list)
     df_date_score = df_score[df_score.date == selected_date]
-    print(df_date_score)
+    list_of_peaks = calendar_popdown(df_date_score)
+        
     df_date = df_results[df_results.date == selected_date]
-    print(df_date)
     selected_weekday = df_date['weekday_text'].iloc[0]
 
     # SPORT
@@ -249,6 +258,7 @@ with col[1]:
     
     st.markdown('#### Diary') 
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
+    selected_peak = st.selectbox('Select a peak', list_of_peaks)
     title = st.text_input("New note", "At this day I was...")
     st.write("The current movie title is", title)
     

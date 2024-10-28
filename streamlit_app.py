@@ -285,7 +285,12 @@ with col[1]:
         button_check = st.form_submit_button("Save")
         if button_check:
             input_test = placeholder.text_input('Make your note', value='', key=1)
-            st.write("Your note was saved")
+            st.write("Y_our note was saved_")
+        
+    with st.sidebar:
+        st.title("Notes")
+        notes = st.text_area("Text", "Notes:- ", height=300)
+        st.download_button(label="Download Notes", data=notes, file_name="my_notes.txt")
         '''    
         note = st.text_input("Make a note", "I think this peak refers to...") 
         button_check = st.form_submit_button("Save")

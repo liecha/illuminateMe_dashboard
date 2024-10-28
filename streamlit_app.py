@@ -73,7 +73,7 @@ st.markdown("""
 #######################
 # Load data
 df_reshaped = pd.read_csv('data/us-population-2010-2019-reshaped.csv')
-df_results = pd.read_csv('data/ai-model/results_20241024_all_points_training_7200min.csv')
+df_results = pd.read_csv('data/ai-model/results_two_weeks_20241027.csv')
 df_sports = pd.read_csv('data/wearable/SPORT_1729522447097.csv')
 df_sleep = pd.read_csv('data/wearable/SLEEP_1729522445075.csv')
 df_remember = pd.read_csv('data/calendar/remember_2024.csv')

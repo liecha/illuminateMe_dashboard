@@ -99,7 +99,7 @@ def calendar_selection(df_calendar, selected_date):
 
 ### COMMUNICATION WITH FRONTEND
 def my_callback(coming_from_app):
-    print(coming_from_app)
+    st.text(str(text_to_display))
     
 #######################
 # Sidebar
@@ -141,8 +141,6 @@ with st.sidebar:
     # CALENDAR
     
     df_calendar_date = calendar_selection(df_calendar, selected_date)
-    print(df_calendar_date)
-
 
 #######################
 # Plots

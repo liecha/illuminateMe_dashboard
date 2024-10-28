@@ -100,7 +100,7 @@ def weekday_text(day_digit):
     return day  
 
 def weekday_summary_peaks(df_results):
-    result_score_10 = df_results[df_results['score'] >= 10]
+    result_score_10 = df_results[df_results['score'] >= 8]
     date_list_score = result_score_10.groupby(['date']).count()   
     date_list_score['dates_string'] = date_list_score.index
     return date_list_score
@@ -463,8 +463,3 @@ with col[1]:
     st.caption("All _:blue[stress scores]_ at selected day")
     lineplot_score = make_lineplot(df_date_score, 'score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)
-    
-    st.markdown('#### Weekday summary') 
-    st.caption("Summary of _:blue[stress scores]_ for _:blue[" + selected_weekday + "s]_")
-    lineplot_weekday_avg = make_lineplot(df_weekday_average, 'score', 'time_string')
-    st.altair_chart(lineplot_weekday_avg, use_container_width=True)

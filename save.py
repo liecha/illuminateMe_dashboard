@@ -58,3 +58,8 @@ with col[2]:
             - :orange[**Gains/Losses**]: states with high inbound/ outbound migration for selected year
             - :orange[**States Migration**]: percentage of states with annual inbound/ outbound migration > 50,000
             ''')
+            
+    st.markdown('#### Weekday summary') 
+    st.caption("Summary of _:blue[stress scores]_ for _:blue[" + selected_weekday + "s]_")
+    lineplot_weekday_avg = make_lineplot(df_weekday_average, 'score', 'time_string')
+    st.altair_chart(lineplot_weekday_avg, use_container_width=True)

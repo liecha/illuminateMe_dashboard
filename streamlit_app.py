@@ -106,7 +106,8 @@ def calendar_popdown(df_date_score):
         list_of_peaks.append(result_string)
     return list_of_peaks
 
-def save_notes(selected_peak, note):
+def save_notes():
+    '''
     date_peak_string = selected_peak[0:10]
     time_peak_string = selected_peak[14:]
     note_dict = {
@@ -114,7 +115,13 @@ def save_notes(selected_peak, note):
         'time': [time_peak_string],
         'note': [note]
         }
-    df_note = pd.DataFrame(data)    
+    df_note = pd.DataFrame(data) '
+    '''   
+    df_note = {
+        'date': ['date_peak_string'],
+        'time': ['time_peak_string'],
+        'note': ['note']
+        }
     df_note.to_csv('data/notes/note-results.csv', index=False)
 
 #######################
@@ -271,7 +278,7 @@ with col[1]:
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
     selected_peak = st.selectbox('Select a peak', list_of_peaks)
     note = st.text_input("Make a note", "I think this peak refers to...")   
-    st.form_submit_button(label="Save", on_click=save_notes(selected_peak, note), type="secondary")
+    st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     st.write("The current movie title is", note)
     
     

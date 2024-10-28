@@ -96,7 +96,7 @@ def calendar_selection(df_calendar, selected_date):
             }
         df_calendar_date = pd.DataFrame(data)      
     return df_calendar_date
-    
+
 #######################
 # Sidebar
 with st.sidebar:
@@ -137,6 +137,8 @@ with st.sidebar:
     # CALENDAR
     
     df_calendar_date = calendar_selection(df_calendar, selected_date)
+    print(df_calendar_date)
+
 
 #######################
 # Plots
@@ -248,13 +250,8 @@ with col[1]:
     
     st.markdown('#### Diary') 
     st.caption("Make _:blue[notes]_ refering to detected stress peaks")
-    st.session_state["user_input"] = st.text_input(label="enter text")
-
-    def my_callback(text_to_display):
-        st.text(str(text_to_display))
-
-
-    st.button("display text", on_click=my_callback, args=(st.session_state["user_input"],))
+    title = st.text_input("Movie title", "Life of Brian")
+    st.write("The current movie title is", title)
     
     
     

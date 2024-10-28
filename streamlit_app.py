@@ -82,7 +82,8 @@ df_remember = pd.read_csv('data/calendar/remember_2024.csv')
 ### GENERAL
 def weekday_summary_peaks(df_results):
     result_score_10 = df_results[df_results['Stress score'] >= 8]
-    date_list_score = result_score_10.groupby(['date']).count()   
+    date_list_score = result_score_10.groupby(['date']).count()
+    date_list_score['date'] = date_list_score.index
     return date_list_score
 
 ### CALENDAR
@@ -146,7 +147,6 @@ with st.sidebar:
     selected_score = st.selectbox('Select score', stress_scores)
     df_score = df_results[df_results['Stress score'] >= selected_score]
     df_period_peak_summary = weekday_summary_peaks(df_results)
-
        
     # DATE SELECTION
     date_list_score = df_score.groupby(['date']).count()

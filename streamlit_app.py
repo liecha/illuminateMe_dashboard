@@ -281,10 +281,17 @@ with col[1]:
     with st.form("key1"):
         # ask for input
         selected_peak = st.selectbox('Select a peak', list_of_peaks)
+        placeholder = st.empty()
+
+        input_test = placeholder.text_input('text')
+        click_clear = st.button('clear text input', key=1)
+        if click_clear:
+            input_test = placeholder.text_input('text', value='', key=1)
+        '''    
         note = st.text_input("Make a note", "I think this peak refers to...") 
         button_check = st.form_submit_button("Save")
         if button_check == True:
-            st.write("TYor note was saved")
+            st.write("Your note was saved")
             date_peak_string = selected_peak[0:10]
             time_peak_string = selected_peak[14:]
             note_dict = {
@@ -294,7 +301,7 @@ with col[1]:
                 }
             df_note = pd.DataFrame(note_dict) 
             df_note.to_csv('data/notes/note-results.csv', index=False)
-            
+         '''   
             
     #st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     #st.write("The current movie title is", note)

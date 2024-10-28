@@ -260,9 +260,12 @@ with col[1]:
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
     selected_peak = st.selectbox('Select a peak', list_of_peaks)
     note = st.text_input("Make a note", "I think this peak refers to...")
+    selected_peak = st.selectbox('Select a peak', list_of_peaks)
+    date_peak_string = selected_peak[0:10]
+    time_peak_string = selected_peak[14:]
     note_dict = {
-        'date': [selected_peak[0:11]],
-        'time': [selected_peak[14:]]
+        'date': [date_peak_string],
+        'time': [time_peak_string]
         'note': [note]
         }
     df_note = pd.DataFrame(data)    

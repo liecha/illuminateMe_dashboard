@@ -282,7 +282,8 @@ with col[1]:
         # ask for input
         selected_peak = st.selectbox('Select a peak', list_of_peaks)
         note = st.text_input("Make a note", "I think this peak refers to...") 
-        button_check = st.form_submit_button("Save", on_click=save_notes())
+        button_check = st.form_submit_button("Save")
+        st.write("This is what you wrote: ", button_check)
     #st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     #st.write("The current movie title is", note)
     

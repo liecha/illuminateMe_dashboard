@@ -259,7 +259,14 @@ with col[1]:
     st.markdown('#### Diary') 
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
     selected_peak = st.selectbox('Select a peak', list_of_peaks)
-    title = st.text_input("New note", "At this day I was...")
+    note = st.text_input("Make a note", "I think this peak refers to...")
+    note_dict = {
+        'date': [selected_peak[0:11]],
+        'time': [selected_peak[14:]]
+        'note': [note]
+        }
+    df_note = pd.DataFrame(data)    
+    df_note.to_csv('data/notes/note-results.csv', index=False)
     st.write("The current movie title is", title)
     
     

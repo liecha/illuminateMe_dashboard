@@ -281,8 +281,5 @@ with col[1]:
     st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     st.write("The current movie title is", note)
     
-    
-    
-    
-    
+  
     

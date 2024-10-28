@@ -285,27 +285,7 @@ with col[1]:
         button_check = st.form_submit_button("Save")
         if button_check:
             input_test = placeholder.text_input('Make your note', value='', key=1)
-            st.write("Y_our note was saved_")
-        
-    with st.sidebar:
-        st.title("Notes")
-        notes = st.text_area("Text", "Notes:- ", height=300)
-        st.download_button(label="Download Notes", data=notes, file_name="my_notes.txt")
-        '''    
-        note = st.text_input("Make a note", "I think this peak refers to...") 
-        button_check = st.form_submit_button("Save")
-        if button_check == True:
-            st.write("Your note was saved")
-            date_peak_string = selected_peak[0:10]
-            time_peak_string = selected_peak[14:]
-            note_dict = {
-                'date': [date_peak_string],
-                'time': [time_peak_string],
-                'note': [note]
-                }
-            df_note = pd.DataFrame(note_dict) 
-            df_note.to_csv('data/notes/note-results.csv', index=False)
-         '''   
+            st.write("Y_our note was saved_") 
             
     #st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     #st.write("The current movie title is", note)

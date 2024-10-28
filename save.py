@@ -63,3 +63,22 @@ with col[2]:
     st.caption("Summary of _:blue[stress scores]_ for _:blue[" + selected_weekday + "s]_")
     lineplot_weekday_avg = make_lineplot(df_weekday_average, 'score', 'time_string')
     st.altair_chart(lineplot_weekday_avg, use_container_width=True)
+    
+    
+    
+    
+        '''    
+        note = st.text_input("Make a note", "I think this peak refers to...") 
+        button_check = st.form_submit_button("Save")
+        if button_check == True:
+            st.write("Your note was saved")
+            date_peak_string = selected_peak[0:10]
+            time_peak_string = selected_peak[14:]
+            note_dict = {
+                'date': [date_peak_string],
+                'time': [time_peak_string],
+                'note': [note]
+                }
+            df_note = pd.DataFrame(note_dict) 
+            df_note.to_csv('data/notes/note-results.csv', index=False)
+         '''  

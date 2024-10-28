@@ -292,6 +292,8 @@ with col[1]:
                 'note': [note]
                 }
             df_note = pd.DataFrame(note_dict) 
+            df_note.to_csv('data/notes/note-results.csv', index=False)
+            st.write("TYor note was saved")
             
     #st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     #st.write("The current movie title is", note)

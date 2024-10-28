@@ -76,6 +76,7 @@ df_results = pd.read_csv('data/ai-model/ai-model-results.csv')
 df_sports = pd.read_csv('data/wearable/sports-results.csv')
 df_sleep = pd.read_csv('data/wearable/sleep-results.csv')
 df_calendar = pd.read_csv('data/calendar/calendar-results.csv')
+df_notes = pd.read_csv('data/notes/note-results.csv')
 #######################
 # Selection functions
 
@@ -96,6 +97,16 @@ def calendar_selection(df_calendar, selected_date):
             }
         df_calendar_date = pd.DataFrame(data)      
     return df_calendar_date
+
+def note_selection(df_notes, selected_date):
+    df_notes_date = df_notes[df_notes['date'] == selected_date]    
+    if len(df_notes_date) == 0:
+        data = {
+            'date_time': ['-'],
+            'event': ['No events registered at this date']
+            }
+        df_notes_date = pd.DataFrame(data)      
+    return df_notes_date
 
 def calendar_popdown(df_date_score):
     list_of_peaks = []
@@ -166,6 +177,7 @@ with st.sidebar:
     
     # CALENDAR   
     df_calendar_date = calendar_selection(df_calendar, selected_date)
+    df_note_date = note_selection(df_notes, selected_date)
 
 #######################
 # Plots
@@ -265,6 +277,23 @@ with col[1]:
                     )}
                  )
     
+    st.caption("_:blue[Your own diary notes]_ from selected day")
+    st.dataframe(df_note_date,
+                 column_order=("date", "time", "note"),
+                 hide_index=True,
+                 width=600,
+                 column_config={
+                    "date": st.column_config.TextColumn(
+                        "Date",
+                    ),
+                    "time": st.column_config.TextColumn(
+                        "Time",
+                    ),
+                    "note": st.column_config.TextColumn(
+                        "Description",
+                    )}
+                 )
+    
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")
     barplot_sport = make_barplot(df_sports_date, 'Time / Activity', 'Activity (minutes)')
@@ -285,10 +314,7 @@ with col[1]:
         button_check = st.form_submit_button("Save")
         if button_check:
             input_test = placeholder.text_input('Make your note', value='', key=1)
-            st.write("_Your note was saved_") 
-            
-    #st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
-    #st.write("The current movie title is", note)
+            st.caption("_Your note was saved_") 
     
   
     

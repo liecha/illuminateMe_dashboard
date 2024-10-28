@@ -248,5 +248,10 @@ with col[1]:
     lineplot_score = make_lineplot(df_date_score, 'Stress score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)
     
+    st.markdown('#### Diary') 
+    st.caption("Make _:blue[notes]_ refering to detected stress peaks")
+    title = st.text_input("Movie title", "Life of Brian")
+    st.write("The current movie title is", title)
+    
     
     

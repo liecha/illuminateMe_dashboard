@@ -75,7 +75,7 @@ st.markdown("""
 df_results = pd.read_csv('data/ai-model/ai-model-results.csv')
 df_sports = pd.read_csv('data/wearable/sports-results.csv')
 df_sleep = pd.read_csv('data/wearable/sleep-results.csv')
-df_remember = pd.read_csv('data/calendar/remember_2024.csv')
+df_calendar = pd.read_csv('data/calendar/calendar-results.csv')
 #######################
 # Selection functions
 
@@ -87,45 +87,15 @@ def weekday_summary_peaks(df_results):
     return date_list_score
 
 ### CALENDAR
-def calendar_prepp(df_remember):
-    start_time = df_remember['start_date_time']
-    date_time_list = []
-    date_list = []
-    time_list = []
-    for i in range(0, len(start_time)):
-        this_day = start_time.iloc[i]
-        sep = this_day[20:25]
-        if sep == '00:00':
-            date_time_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+00:00'))
-        if sep == '02:00':
-            date_time_list.append(pd.to_datetime(this_day, format='%Y-%m-%d %H:%M:%S+02:00'))
-        time_string = str(date_time_list[i].time())
-        time_list.append(time_string[0:5])
-        date_string = str(date_time_list[i].date())
-        date_list.append(date_string)
-    df_remember['date_time'] = date_time_list
-    df_remember['time'] = time_list
-    df_remember['date'] = date_list
-    return df_remember
-
-def calendar_selection(df_remember, selected_date):
-    calendar_selection = []
-    
-    # Select date
-    for i in range(0, len(df_remember)):
-        if str(df_remember['date_time'].iloc[i].date()) == selected_date:
-            calendar_selection.append(df_remember.iloc[i])
-    if len(calendar_selection) == 0:
+def calendar_selection(df_calendar, selected_date):
+    df_calendar_date = df_calendar[df_calendar['date'] == selected_date]    
+    if len(df_calendar_date) == 0:
         data = {
             'date_time': ['-'],
             'event': ['No events registered at this date']
             }
-        df_remember = pd.DataFrame(data)
-    else:
-        df_remember= pd.concat(calendar_selection, axis = 1).T.sort_values(by=['date_time'])   
-        
-    return df_remember
-
+        df_calendar_date = pd.DataFrame(data)      
+    return df_calendar_date
 
 #######################
 # Sidebar
@@ -165,8 +135,9 @@ with st.sidebar:
     df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
     
     # CALENDAR
-    df_cal_rem_prepp = calendar_prepp(df_remember)
-    df_cal_remember = calendar_selection(df_cal_rem_prepp, selected_date)
+    
+    df_calendar_date = calendar_selection(df_calendar, selected_date)
+    print(df_calendar_date)
 
 
 #######################
@@ -251,7 +222,7 @@ with col[0]:
 with col[1]:          
     st.markdown('#### Events') 
     st.caption("_:blue[Calendar notes]_ from selected day")
-    st.dataframe(df_cal_remember,
+    st.dataframe(df_calendar_date,
                  column_order=("date", "time", "event"),
                  hide_index=True,
                  width=600,

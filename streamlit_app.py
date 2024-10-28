@@ -279,13 +279,12 @@ with col[1]:
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
      
     with st.form("key1"):
-        # ask for input
         selected_peak = st.selectbox('Select a peak', list_of_peaks)
         placeholder = st.empty()
-        input_test = placeholder.text_input('text')
+        input_test = placeholder.text_input('Make your note')
         button_check = st.form_submit_button("Save")
         if button_check:
-            input_test = placeholder.text_input('text', value='', key=1)
+            input_test = placeholder.text_input('Make your note', value='', key=1)
             st.write("Your note was saved")
         '''    
         note = st.text_input("Make a note", "I think this peak refers to...") 

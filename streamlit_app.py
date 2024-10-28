@@ -284,6 +284,7 @@ with col[1]:
         note = st.text_input("Make a note", "I think this peak refers to...") 
         button_check = st.form_submit_button("Save")
         if button_check == True:
+            st.write("TYor note was saved")
             date_peak_string = selected_peak[0:10]
             time_peak_string = selected_peak[14:]
             note_dict = {
@@ -293,7 +294,7 @@ with col[1]:
                 }
             df_note = pd.DataFrame(note_dict) 
             df_note.to_csv('data/notes/note-results.csv', index=False)
-            st.write("TYor note was saved")
+            
             
     #st.form_submit_button(label="Save", on_click=save_notes(), type="secondary")
     #st.write("The current movie title is", note)

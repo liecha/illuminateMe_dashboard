@@ -354,5 +354,8 @@ with col[1]:
     
     st.markdown('#### Day overview') 
     st.caption("All _:blue[stress scores]_ at selected day")
-    lineplot_score = make_lineplot(df_date_score, 'score', 'time')
+    lineplot_score = make_lineplot(df_date_score, 'Stress score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)
+    
+    
+    

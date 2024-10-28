@@ -270,7 +270,7 @@ with col[1]:
         }
     df_note = pd.DataFrame(data)    
     df_note.to_csv('data/notes/note-results.csv', index=False)
-    st.write("The current movie title is", title)
+    st.write("The current movie title is", note)
     
     
     

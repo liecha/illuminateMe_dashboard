@@ -291,7 +291,7 @@ with col[0]:
                     "time": st.column_config.TextColumn(
                         "Time",
                     ),
-                    "weekday": st.column_config.TextColumn(
+                    "weekday_text": st.column_config.TextColumn(
                         "Weekday",
                     ),
                     "score": st.column_config.ProgressColumn(

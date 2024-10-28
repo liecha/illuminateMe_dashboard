@@ -265,7 +265,7 @@ with col[1]:
     time_peak_string = selected_peak[14:]
     note_dict = {
         'date': [date_peak_string],
-        'time': [time_peak_string]
+        'time': [time_peak_string],
         'note': [note]
         }
     df_note = pd.DataFrame(data)    

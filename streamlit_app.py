@@ -287,7 +287,7 @@ with col[1]:
     selected_peak = st.selectbox('Select a peak', list_of_peaks)
     # Using the "with" syntax
     with st.form(key='my_form'):
-    	text_input = st.text_input(label='Make a note)
+    	text_input = st.text_input(label='Make a note')
     	submit_button = st.form_submit_button(label='Save')
  
     st.markdown('#### Activity')  

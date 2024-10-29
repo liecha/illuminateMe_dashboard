@@ -287,8 +287,6 @@ with col[1]:
     # https://docs.streamlit.io/develop/concepts/connections/connecting-to-data
     st.markdown('#### Diary') 
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
-     
-
     selected_peak = st.selectbox('Select a peak', list_of_peaks)   
     st.text_input('Create a note:', key='widget', on_change=clear_text)
     my_text = st.session_state.get('my_text', '')

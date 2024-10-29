@@ -199,8 +199,8 @@ def make_donut(source):
 
 #######################
 # Dashboard Main Panel
-st.caption("_Logged in as_")
-st.subheader('Emelie Chandni Jutvik')
+st.caption("_Client_")
+st.subheader('Anna Andersson')
 col = st.columns((3.0, 5.5), gap='medium')
 
 with col[0]:

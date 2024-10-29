@@ -287,7 +287,7 @@ with col[1]:
     selected_peak = st.selectbox('Select a peak', list_of_peaks)
     # Declare a form and call methods directly on the returned object
     form = st.form(key='my_form')
-    form.text_input(label='Make a note)
+    form.text_input(label='Make a note')
     submit_button = form.form_submit_button(label='Save')
  
     st.markdown('#### Activity')  

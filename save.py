@@ -128,3 +128,12 @@ with col[2]:
         pickle.dump(local_state_variable, f)
     
     st.write('Count = ', local_state_variable)
+    
+    
+    with st.form("key=1"):
+        selected_peak = st.selectbox('Select a peak', list_of_peaks)
+        placeholder = st.empty()
+        input_test = placeholder.text_input('Make your note')
+        button_check = st.form_submit_button("Save")
+        if input_test:
+            input_test = placeholder.text_input('Make your note', value='', key=1)

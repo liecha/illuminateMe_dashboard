@@ -83,7 +83,7 @@ df_notes = pd.read_csv('data/notes/note-results.csv')
 
 ### GENERAL
 def weekday_summary_peaks(df_results):
-    result_score_10 = df_results[df_results['Stress score'] >= 8]
+    result_score_10 = df_results[df_results['Stress score'] >= 10]
     date_list_score = result_score_10.groupby(['date']).count()
     date_list_score['date'] = date_list_score.index
     return date_list_score

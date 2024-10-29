@@ -3,3 +3,4 @@ streamlit-calendar
 pandas
 altair
 plotly
+pickle

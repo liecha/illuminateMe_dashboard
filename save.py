@@ -82,7 +82,26 @@ with col[2]:
             df_note = pd.DataFrame(note_dict) 
             df_note.to_csv('data/notes/note-results.csv', index=False)
          '''  
-         
+ def save_notes(state_variable):
+     '''
+     date_peak_string = selected_peak[0:10]
+     time_peak_string = selected_peak[14:]
+     note_dict = {
+         'date': [date_peak_string],
+         'time': [time_peak_string],
+         'note': [note]
+         }
+     df_note = pd.DataFrame(data) '
+     '''   
+     note = {
+         'date': ['date_peak_string'],
+         'time': ['time_peak_string'],
+         'note': [state_variable]
+         }
+     df_note = pd.DataFrame(note) 
+     df_note.to_csv('data/notes/note-results.csv', index=False)
+     print('Runned saving function...')
+        
     st.markdown('#### Diary') 
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
      

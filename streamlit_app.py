@@ -95,7 +95,9 @@ def calendar_selection(df_calendar, selected_date):
             'date_time': ['-'],
             'event': ['No events where registered at this date']
             }
-        df_calendar_date = pd.DataFrame(data)      
+        df_calendar_date = pd.DataFrame(data)     
+    else:
+        df_calendar_date = df_calendar_date.sort_values(by=['time'])
     return df_calendar_date
 
 def note_selection(df_notes, selected_date):
@@ -103,10 +105,13 @@ def note_selection(df_notes, selected_date):
     if len(df_notes_date) == 0:
         data = {
             'date': ['-'],
+            'time': ['-'],
             'note': ['No notes where made at this date']
             }
         df_notes_date = pd.DataFrame(data)      
-    return df_notes_date.sort_values(by=['time'])
+    else:
+        df_notes_date = df_notes_date.sort_values(by=['time'])
+    return df_notes_date
 
 def calendar_popdown(df_date_score):
     list_of_peaks = []
@@ -116,26 +121,6 @@ def calendar_popdown(df_date_score):
         result_string = date_string + ' at ' + time_string
         list_of_peaks.append(result_string)
     return list_of_peaks
-
-def save_notes(state_variable):
-    '''
-    date_peak_string = selected_peak[0:10]
-    time_peak_string = selected_peak[14:]
-    note_dict = {
-        'date': [date_peak_string],
-        'time': [time_peak_string],
-        'note': [note]
-        }
-    df_note = pd.DataFrame(data) '
-    '''   
-    note = {
-        'date': ['date_peak_string'],
-        'time': ['time_peak_string'],
-        'note': [state_variable]
-        }
-    df_note = pd.DataFrame(note) 
-    df_note.to_csv('data/notes/note-results.csv', index=False)
-    print('Runned saving function...')
 
 #######################
 # Sidebar
@@ -177,8 +162,12 @@ with st.sidebar:
     df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
     
     # CALENDAR   
-    df_calendar_date = calendar_selection(df_calendar, selected_date)
+    df_calendar_date = calendar_selection(df_calendar, '2024-10-07')
+    print(df_calendar_date)
+    
+    # NOTES  
     df_note_date = note_selection(df_notes, selected_date)
+
 
 #######################
 # Plots

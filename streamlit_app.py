@@ -317,5 +317,20 @@ with col[1]:
             input_test = placeholder.text_input('Make your note', value='', key=1)
             st.caption("_Your note was saved_") 
     
+    st.title('Counter example')
+    if 'count' not in st.session_state:
+        st.session_state.count = 0
+    
+    increment = st.button('Increment')
+    if increment:
+        st.session_stat.count += 1
+    
+    st.write('Count = ', st.session_state.count)
+    
+    
+    
+    
+    
+    
   
     

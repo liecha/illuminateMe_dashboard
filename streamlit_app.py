@@ -282,7 +282,7 @@ with col[1]:
                         "Description",
                     )}
                  )
-  
+    # https://docs.streamlit.io/develop/concepts/connections/connecting-to-data
     st.markdown('#### Diary') 
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
      

@@ -295,6 +295,9 @@ with col[1]:
     	with placeholder_2.form(key = 'my_form', clear_on_submit = False):			
             input_test = placeholder.text_input('Make your note')
             button_check = st.form_submit_button("Save")
+            if input_test:
+                button_check = placeholder.text_input('Make your note', value='', key=1)
+
     		st.write('Something is made here')					
     '''
      		submit_button = st.form_submit_button(label = 'Submit')	

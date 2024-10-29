@@ -92,7 +92,6 @@ def calendar_selection(df_calendar, selected_date):
     df_calendar_date = df_calendar[df_calendar['date'] == selected_date]    
     if len(df_calendar_date) == 0:
         data = {
-            'date_time': ['-'],
             'event': ['No events where registered at this date']
             }
         df_calendar_date = pd.DataFrame(data)     
@@ -104,7 +103,6 @@ def note_selection(df_notes, selected_date):
     df_notes_date = df_notes[df_notes['date'] == selected_date]    
     if len(df_notes_date) == 0:
         data = {
-            'date': ['-'],
             'note': ['No notes where made at this date']
             }
         df_notes_date = pd.DataFrame(data)      

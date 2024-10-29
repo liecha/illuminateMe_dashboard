@@ -289,16 +289,16 @@ with col[1]:
     placeholder = st.empty()
     question = placeholder.text_input(label = 'Question', key = '1')
 
-    if question:
-    
+    if question:   
     	placeholder_2 = st.empty()
     
     	with placeholder_2.form(key = 'my_form', clear_on_submit = False):			
-    
+            input_test = placeholder.text_input('Make your note')
+            button_check = st.form_submit_button("Save")
     		st.write('Something is made here')					
-    
+    '''
      		submit_button = st.form_submit_button(label = 'Submit')	
-    	'''
+    	
     		if submit_button:
                 
     			# Creating a csv file

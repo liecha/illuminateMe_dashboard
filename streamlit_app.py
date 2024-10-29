@@ -297,6 +297,17 @@ with col[1]:
             button_check = st.form_submit_button("Save")
             if input_test:
                 button_check = placeholder.text_input('Make your note', value='', key=1)
+    			# Creating a csv file
+    			df = pd.DataFrame({'col': question}, index = [0])
+    			df.to_csv("Testing_2.csv", mode = "a", index = False, header = None)
+    	
+    			st.write('File created!')
+    	
+    			time.sleep(1)			
+    	
+    			question = placeholder.text_input(label = 'Question', key = '2')
+    		
+    			placeholder_2.empty()
     '''
     		st.write('Something is made here')					
 

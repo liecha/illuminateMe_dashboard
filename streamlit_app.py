@@ -288,12 +288,10 @@ with col[1]:
     st.markdown('#### Diary') 
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
      
-    with st.form("key1"):
-        selected_peak = st.selectbox('Select a peak', list_of_peaks)   
-        st.text_input('Create a note:', key='widget', on_change=clear_text)
-        button_check = st.form_submit_button("Save")
-        if button_check:
-            my_text = st.session_state.get('my_text', '')
+
+    selected_peak = st.selectbox('Select a peak', list_of_peaks)   
+    st.text_input('Create a note:', key='widget', on_change=clear_text)
+    my_text = st.session_state.get('my_text', '')
     
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")

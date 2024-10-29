@@ -287,8 +287,9 @@ with col[1]:
         selected_peak = st.selectbox('Select a peak', list_of_peaks)
         placeholder = st.empty()
         input_text = placeholder.text_input('Make your note')
-        if button_check:
-            input_text = placeholder.text_input('Make your note', value='', key=1)
+        #button_check = st.form_submit_button("Save")
+        if input_text:
+            input_test = placeholder.text_input('Make your note', value='', key=1)
             st.caption("_Your note was saved_") 
             
     st.markdown('#### Activity')  

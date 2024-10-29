@@ -120,6 +120,10 @@ def calendar_popdown(df_date_score):
         list_of_peaks.append(result_string)
     return list_of_peaks
 
+def clear_text():
+    st.session_state.my_text = st.session_state.widget
+    st.session_state.widget = ""
+
 #######################
 # Sidebar
 with st.sidebar:
@@ -286,47 +290,10 @@ with col[1]:
      
 
     selected_peak = st.selectbox('Select a peak', list_of_peaks)   
-    placeholder = st.empty()
-    question = placeholder.text_input(label = 'Question', key = '1')
-
-    if question:   
-    	placeholder_2 = st.empty()
+    st.text_input('Enter text here:', key='widget', on_change=clear_text)
+    my_text = st.session_state.get('my_text', '')
+    st.write(my_text)
     
-    	with placeholder_2.form(key = 'my_form', clear_on_submit = False):			
-            input_test = placeholder.text_input('Make your note')
-            button_check = st.form_submit_button("Save")
-            if input_test:
-                button_check = placeholder.text_input('Make your note', value='', key=1)
-    			# Creating a csv file
-    			df = pd.DataFrame({'col': question}, index = [0])
-    			df.to_csv("Testing_2.csv", mode = "a", index = False, header = None)
-    	
-    			st.write('File created!')
-    	
-    			time.sleep(1)			
-    	
-    			question = placeholder.text_input(label = 'Question', key = '2')
-    		
-    			placeholder_2.empty()
-    '''
-    		st.write('Something is made here')					
-
-     		submit_button = st.form_submit_button(label = 'Submit')	
-    	
-    		if submit_button:
-                
-    			# Creating a csv file
-    			df = pd.DataFrame({'col': question}, index = [0])
-    			df.to_csv("Testing_2.csv", mode = "a", index = False, header = None)
-    	
-    			st.write('File created!')
-    	
-    			time.sleep(1)			
-    	
-    			question = placeholder.text_input(label = 'Question', key = '2')
-    		
-    			placeholder_2.empty()
- '''
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")
     barplot_sport = make_barplot(df_sports_date, 'Time / Activity', 'Activity (minutes)')

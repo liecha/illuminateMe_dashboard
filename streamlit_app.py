@@ -135,6 +135,7 @@ def save_notes(state_variable):
         }
     df_note = pd.DataFrame(note) 
     df_note.to_csv('data/notes/note-results.csv', index=False)
+    print('Runned saving function...')
 
 #######################
 # Sidebar

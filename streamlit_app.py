@@ -93,7 +93,7 @@ def calendar_selection(df_calendar, selected_date):
     if len(df_calendar_date) == 0:
         data = {
             'date_time': ['-'],
-            'event': ['No events registered at this date']
+            'event': ['No events where registered at this date']
             }
         df_calendar_date = pd.DataFrame(data)      
     return df_calendar_date
@@ -103,8 +103,7 @@ def note_selection(df_notes, selected_date):
     if len(df_notes_date) == 0:
         data = {
             'date': ['-'],
-            'time': ['-'],
-            'note': ['No events registered at this date']
+            'note': ['No notes where made at this date']
             }
         df_notes_date = pd.DataFrame(data)      
     return df_notes_date
@@ -118,7 +117,7 @@ def calendar_popdown(df_date_score):
         list_of_peaks.append(result_string)
     return list_of_peaks
 
-def save_notes():
+def save_notes(state_variable):
     '''
     date_peak_string = selected_peak[0:10]
     time_peak_string = selected_peak[14:]
@@ -132,7 +131,7 @@ def save_notes():
     note = {
         'date': ['date_peak_string'],
         'time': ['time_peak_string'],
-        'note': ['note']
+        'note': [state_variable]
         }
     df_note = pd.DataFrame(note) 
     df_note.to_csv('data/notes/note-results.csv', index=False)
@@ -324,6 +323,7 @@ with col[1]:
     increment = st.button('Increment')
     if increment:
         st.session_state.count += 1
+        save_notes(st.session_state.count)
     
     st.write('Count = ', st.session_state.count)
     

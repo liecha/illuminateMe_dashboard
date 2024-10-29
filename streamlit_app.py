@@ -233,6 +233,11 @@ with col[0]:
                         max_value=max(df_date_score['Stress score']),
                      )}
                  )
+
+    st.markdown('#### Period summary')  
+    st.caption("Detected _:blue[stress peaks]_ for this period")
+    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date', 'Stress score')
+    st.altair_chart(summary_peaks_score_plot, use_container_width=True)
     
     st.markdown('#### Sleep')
     st.caption("You where sleeping for _:blue[" + df_sleep_date['totalSleep_hours'].values[0] + "]_  at selected date")
@@ -253,10 +258,7 @@ with col[0]:
             aim to get between an hour or just under two hours of deep sleep.
             ''')
     
-    st.markdown('#### Period summary')  
-    st.caption("Detected _:blue[stress peaks]_ for this period")
-    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date', 'Stress score')
-    st.altair_chart(summary_peaks_score_plot, use_container_width=True)
+
     
 
 with col[1]:          

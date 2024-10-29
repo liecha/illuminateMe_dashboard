@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import plotly.express as px
+    import time
 
 #######################
 # Page configuration
@@ -290,8 +291,35 @@ with col[1]:
         placeholder = st.empty()
         input_test = placeholder.text_input('Make your note')
         button_check = st.form_submit_button("Save")
-        if button_check:
+        if input_test:
             input_test = placeholder.text_input('Make your note', value='', key=1)
+    
+    placeholder = st.empty()
+    question = placeholder.text_input(label = 'Question', key = '1')
+
+    if question:
+    
+    	placeholder_2 = st.empty()
+    
+    	with placeholder_2.form(key = 'my_form', clear_on_submit = False):			
+    
+    		st.write('Something is made here')					
+    
+     		submit_button = st.form_submit_button(label = 'Submit')	
+    	
+    		if submit_button:
+    
+    			# Creating a csv file
+    			df = pd.DataFrame({'col': question}, index = [0])
+    			df.to_csv("Testing_2.csv", mode = "a", index = False, header = None)
+    	
+    			st.write('File created!')
+    	
+    			time.sleep(1)			
+    	
+    			question = placeholder.text_input(label = 'Question', key = '2')
+    		
+    			placeholder_2.empty()
  
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")

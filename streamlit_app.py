@@ -200,6 +200,7 @@ def make_donut(source):
 st.caption("_Logged in as_")
 st.subheader('Emelie Chandni Jutvik')
 col = st.columns((3.0, 5.5), gap='medium')
+
 with col[0]:
     st.markdown('#### Stress peaks')
     st.caption("The selected day is a _:blue[" + selected_weekday + "]_")
@@ -246,9 +247,6 @@ with col[0]:
             aim to get between an hour or just under two hours of deep sleep.
             ''')
     
-
-    
-
 with col[1]:          
     st.markdown('#### Events') 
     st.caption("_:blue[Calendar notes]_ from selected day")
@@ -284,7 +282,19 @@ with col[1]:
                         "Description",
                     )}
                  )
-    
+  
+    st.markdown('#### Diary') 
+    st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
+     
+    with st.form("key1"):
+        selected_peak = st.selectbox('Select a peak', list_of_peaks)
+        placeholder = st.empty()
+        input_test = placeholder.text_input('Make your note')
+        button_check = st.form_submit_button("Save")
+        if button_check:
+            input_test = placeholder.text_input('Make your note', value='', key=1)
+            st.caption("_Your note was saved_") 
+            
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")
     barplot_sport = make_barplot(df_sports_date, 'Time / Activity', 'Activity (minutes)')

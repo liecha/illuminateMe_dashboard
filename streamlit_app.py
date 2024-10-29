@@ -106,7 +106,7 @@ def note_selection(df_notes, selected_date):
             'note': ['No notes where made at this date']
             }
         df_notes_date = pd.DataFrame(data)      
-    return df_notes_date
+    return df_notes_date.sort_values(by=['time'])
 
 def calendar_popdown(df_date_score):
     list_of_peaks = []

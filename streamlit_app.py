@@ -180,7 +180,7 @@ with st.sidebar:
     df_calendar_date = calendar_selection(df_calendar, selected_date)
     df_note_date = note_selection(df_notes, selected_date)
     
-    local_state_variable = 0
+    local_state_variable = []
 
 #######################
 # Plots
@@ -326,8 +326,11 @@ with col[1]:
     increment = st.button('Increment')
     if increment:
         st.session_state.count += 1
-        local_state_variable = st.session_state.count
+        local_state_variable.append(st.session_state.count)
         save_notes(local_state_variable)
+    
+    with open('counter_file.pkl', 'wb') as f:  # open a text file
+        pickle.dump(local_state_variable, f)
     
     st.write('Count = ', local_state_variable)
     

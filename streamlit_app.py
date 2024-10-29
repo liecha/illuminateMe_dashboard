@@ -285,10 +285,13 @@ with col[1]:
      
 
     selected_peak = st.selectbox('Select a peak', list_of_peaks)
-    # Declare a form and call methods directly on the returned object
-    form = st.form(key='my_form')
-    form.text_input(label='Make a note')
-    submit_button = form.form_submit_button(label='Save')
+    with st.form("key=1"):
+        selected_peak = st.selectbox('Select a peak', list_of_peaks)
+        placeholder = st.empty()
+        input_test = placeholder.text_input('Make your note')
+        button_check = st.form_submit_button("Save")
+        if button_check:
+            input_test = placeholder.text_input('Make your note', value='', key=1)
  
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")

@@ -287,11 +287,12 @@ with col[1]:
         selected_peak = st.selectbox('Select a peak', list_of_peaks)
         placeholder = st.empty()
         input_text = placeholder.text_input('Make your note')
+        '''
         button_check = st.form_submit_button("Save")
         if input_text:
             input_test = placeholder.text_input('Make your note', value='', key=1)
             st.caption("_Your note was saved_") 
-            
+        '''   
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")
     barplot_sport = make_barplot(df_sports_date, 'Time / Activity', 'Activity (minutes)')

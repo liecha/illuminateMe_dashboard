@@ -4,7 +4,6 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import plotly.express as px
-import pickle
 
 #######################
 # Page configuration
@@ -180,8 +179,6 @@ with st.sidebar:
     # CALENDAR   
     df_calendar_date = calendar_selection(df_calendar, selected_date)
     df_note_date = note_selection(df_notes, selected_date)
-    
-    local_state_variable = []
 
 #######################
 # Plots
@@ -307,38 +304,4 @@ with col[1]:
     st.caption("All _:blue[stress scores]_ at selected day")
     lineplot_score = make_lineplot(df_date, 'Stress score', 'time')
     st.altair_chart(lineplot_score, use_container_width=True)
-    
-    st.markdown('#### Diary') 
-    st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
-     
-    with st.form("key1"):
-        selected_peak = st.selectbox('Select a peak', list_of_peaks)
-        placeholder = st.empty()
-        input_test = placeholder.text_input('Make your note')
-        button_check = st.form_submit_button("Save")
-        if button_check:
-            input_test = placeholder.text_input('Make your note', value='', key=1)
-            st.caption("_Your note was saved_") 
-    
-    st.title('Counter example')
-    if 'count' not in st.session_state:
-        st.session_state.count = 0
-    
-    increment = st.button('Increment')
-    if increment:
-        st.session_state.count += 1
-        local_state_variable.append(st.session_state.count)
-        save_notes(local_state_variable)
-    
-    with open('counter_file.pkl', 'wb') as f:  # open a text file
-        pickle.dump(local_state_variable, f)
-    
-    st.write('Count = ', local_state_variable)
-    
-    
-    
-    
-    
-    
-  
     

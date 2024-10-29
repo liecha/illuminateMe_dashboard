@@ -82,3 +82,30 @@ with col[2]:
             df_note = pd.DataFrame(note_dict) 
             df_note.to_csv('data/notes/note-results.csv', index=False)
          '''  
+         
+    st.markdown('#### Diary') 
+    st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
+     
+    with st.form("key1"):
+        selected_peak = st.selectbox('Select a peak', list_of_peaks)
+        placeholder = st.empty()
+        input_test = placeholder.text_input('Make your note')
+        button_check = st.form_submit_button("Save")
+        if button_check:
+            input_test = placeholder.text_input('Make your note', value='', key=1)
+            st.caption("_Your note was saved_") 
+    
+    st.title('Counter example')
+    if 'count' not in st.session_state:
+        st.session_state.count = 0
+    
+    increment = st.button('Increment')
+    if increment:
+        st.session_state.count += 1
+        local_state_variable.append(st.session_state.count)
+        save_notes(local_state_variable)
+    
+    with open('counter_file.pkl', 'wb') as f:  # open a text file
+        pickle.dump(local_state_variable, f)
+    
+    st.write('Count = ', local_state_variable)

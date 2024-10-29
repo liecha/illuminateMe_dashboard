@@ -292,7 +292,6 @@ with col[1]:
     selected_peak = st.selectbox('Select a peak', list_of_peaks)   
     st.text_input('Enter text here:', key='widget', on_change=clear_text)
     my_text = st.session_state.get('my_text', '')
-    st.write(my_text)
     
     st.markdown('#### Activity')  
     st.caption("_:blue[Wearable activities]_ from selected day")

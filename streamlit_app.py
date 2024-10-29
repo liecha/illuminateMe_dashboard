@@ -162,8 +162,7 @@ with st.sidebar:
     df_sleep_date = df_sleep[df_sleep['date'] == selected_date]
     
     # CALENDAR   
-    df_calendar_date = calendar_selection(df_calendar, '2024-10-07')
-    print(df_calendar_date)
+    df_calendar_date = calendar_selection(df_calendar, selected_date)
     
     # NOTES  
     df_note_date = note_selection(df_notes, selected_date)

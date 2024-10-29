@@ -288,7 +288,7 @@ with col[1]:
         placeholder = st.empty()
         input_text = placeholder.text_input('Make your note')
         #button_check = st.form_submit_button("Save")
-        if input_text:
+        if len(input_text) != 0:
             input_test = placeholder.text_input('Make your note', value='', key=1)
             st.caption("_Your note was saved_") 
             

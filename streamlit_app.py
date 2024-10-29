@@ -178,6 +178,8 @@ with st.sidebar:
     # CALENDAR   
     df_calendar_date = calendar_selection(df_calendar, selected_date)
     df_note_date = note_selection(df_notes, selected_date)
+    
+    local_state_variable = 0
 
 #######################
 # Plots
@@ -323,9 +325,10 @@ with col[1]:
     increment = st.button('Increment')
     if increment:
         st.session_state.count += 1
-        save_notes(st.session_state.count)
+        local_state_variable = st.session_state.count
+        save_notes(local_state_variable)
     
-    st.write('Count = ', st.session_state.count)
+    st.write('Count = ', local_state_variable)
     
     
     

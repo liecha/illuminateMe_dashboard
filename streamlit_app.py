@@ -98,7 +98,7 @@ def weekday_summary_peaks(df_results):
     date_list_score.insert(0, 'date_readable', date_text)
     date_list_score = date_list_score[['date', 'date_readable', 'Stress score']]
     date_list_score.rename(columns={"Stress score": "Counted stress peaks"}, inplace = True)
-    date_list_score = date_list_score.sort_values(by=['date'])
+    date_list_score = date_list_score.sort_values(by=['Counted stress peaks'])
     return date_list_score
 
 ### CALENDAR

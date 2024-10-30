@@ -98,7 +98,6 @@ def weekday_summary_peaks(df_results):
     date_list_score.insert(0, 'date_readable', date_text)
     date_list_score = date_list_score[['date', 'date_readable', 'Stress score']]
     date_list_score.rename(columns={"Stress score": "Counted stress peaks"}, inplace = True)
-    date_list_score = date_list_score.sort_values(by=['Counted stress peaks'])
     return date_list_score
 
 ### CALENDAR
@@ -157,6 +156,7 @@ with st.sidebar:
     selected_score = st.selectbox('Select score', stress_scores)
     df_score = df_results[df_results['Stress score'] >= selected_score]
     df_period_peak_summary = weekday_summary_peaks(df_results)
+    print(df_period_peak_summary)
        
     # DATE SELECTION
     date_list_score = df_score.groupby(['date']).count()

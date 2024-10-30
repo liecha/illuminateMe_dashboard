@@ -82,11 +82,21 @@ df_notes = pd.read_csv('data/notes/note-results.csv')
 # Selection functions
 
 ### GENERAL
+def date_to_text(df_results, date_list):
+    date_text_list = []
+    for i in range(0, len(date_list)):
+        this_date = df_results[df_results['date'] == date_list[i]] 
+        date_text = this_date.iloc[0]['date_in_text']
+        date_text_list.append(date_text)
+    return date_text_list
+
 def weekday_summary_peaks(df_results):
     result_score_10 = df_results[df_results['Stress score'] >= 8]
     date_list_score = result_score_10.groupby(['date']).count()    
     date_list_score['date'] = date_list_score.index
-    date_list_score = date_list_score[['date', 'Stress score']]
+    date_text = date_to_text(result_score_10, date_list_score['date'].values)
+    date_list_score.insert(0, 'date_readable', date_text)
+    date_list_score = date_list_score[['date', 'date_readable', 'Stress score']]
     date_list_score.rename(columns={"Stress score": "Counted stress peaks"}, inplace = True)
     return date_list_score
 
@@ -229,7 +239,7 @@ with col[0]:
 
     st.markdown('#### Period summary')  
     st.caption("Detected _:blue[stress peaks]_ for this period")
-    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date', 'Counted stress peaks')
+    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date_readable', 'Counted stress peaks')
     st.altair_chart(summary_peaks_score_plot, use_container_width=True)
     
     st.markdown('#### Sleep')

@@ -3,8 +3,6 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-import plotly.express as px
-import time
 
 #######################
 # Page configuration
@@ -282,6 +280,11 @@ with col[1]:
                  )
     
     st.caption("_:blue[Your own diary notes]_ from selected day")
+    anxiety = st.checkbox("Anxiety")
+    panic = st.checkbox("Panic attack")
+    nausea = st.checkbox("Nausea")
+    nausea = st.checkbox("Nausea")
+    palpitation = st.checkbox("Palpitation")
     st.dataframe(df_note_date,
                  column_order=("date", "time", "note"),
                  hide_index=True,

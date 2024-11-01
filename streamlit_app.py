@@ -300,7 +300,7 @@ with col[1]:
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
     selected_peak = st.selectbox('Select a peak', list_of_peaks)   
     options = st.multiselect(
-        "Did you experience any of the following physical expressions?",
+        "Did you experience any of the following physical expressions at _:blue[selected stress peak]_?",
         ["Anxiety", "Panik attack", "Neausa", "Palpitation", "Tense", "None"],
     )  
     st.text_input('Create a note:', key='widget', on_change=clear_text)

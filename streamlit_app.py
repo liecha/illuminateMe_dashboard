@@ -280,11 +280,6 @@ with col[1]:
                  )
     
     st.caption("_:blue[Your own diary notes]_ from selected day")
-    anxiety = st.checkbox("Anxiety")
-    panic = st.checkbox("Panic attack")
-    nausea = st.checkbox("Nausea")
-    nausea = st.checkbox("Nausea")
-    palpitation = st.checkbox("Palpitation")
     st.dataframe(df_note_date,
                  column_order=("date", "time", "note"),
                  hide_index=True,
@@ -304,6 +299,11 @@ with col[1]:
     st.markdown('#### Diary') 
     st.caption("Make _:blue[your own notes]_ refering to detected stress peaks")
     selected_peak = st.selectbox('Select a peak', list_of_peaks)   
+    anxiety = st.checkbox("Anxiety")
+    panic = st.checkbox("Panic attack")
+    nausea = st.checkbox("Nausea")
+    nausea = st.checkbox("Nausea")
+    palpitation = st.checkbox("Palpitation")
     st.text_input('Create a note:', key='widget', on_change=clear_text)
     my_text = st.session_state.get('my_text', '')
     

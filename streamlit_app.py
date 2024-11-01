@@ -302,9 +302,8 @@ with col[1]:
     options = st.multiselect(
         "Did you experience any of the following physical expressions?",
         ["Anxiety", "Panik attack", "Neausa", "Palpitation", "Tense", "None"],
-        ["None"],
+        [" "],
     )  
-    st.write("You selected:", options)
     st.text_input('Create a note:', key='widget', on_change=clear_text)
     my_text = st.session_state.get('my_text', '')
     

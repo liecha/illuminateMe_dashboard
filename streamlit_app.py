@@ -239,7 +239,7 @@ with col[0]:
 
     st.markdown('#### Period summary')  
     st.caption("Detected _:blue[stress peaks]_ for this period")
-    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'Day/Month/Weekday', 'Counted stress peaks')
+    summary_peaks_score_plot = make_barplot(df_period_peak_summary, 'date', 'Counted stress peaks')
     st.altair_chart(summary_peaks_score_plot, use_container_width=True)
     
     st.markdown('#### Sleep')
